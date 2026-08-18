@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>B01 중선정리 — 고1 수학 직관</title>
+<link rel="stylesheet" href="../../assets/base.css">
+</head>
+<body>
+
+<nav class="topbar wrap">
+  <a href="../../index.html">← 고1 수학 직관</a>
+  <span>기본 B01 / 중선정리</span>
+</nav>
+
+<header class="hero wrap">
+  <p class="eyebrow">b01 · apollonius median theorem</p>
+  <h1>두 변의 길이를<br><em>중선 하나</em>가<br>붙잡고 있다</h1>
+  <p class="lead">삼각형의 한 변을 반으로 접고, 그 접힌 자리와 마주 보는 꼭짓점을 이어 봅니다. 이 선(중선)의 길이는 자를 대지 않아도 세 변의 길이만으로 정해집니다. 그런데 그 관계는 <strong>길이끼리가 아니라 제곱끼리</strong> 더할 때만 보입니다. 왜 하필 제곱인지를 따라가 봅니다.</p>
+</header>
+
+<section class="wrap">
+  <h2>먼저 준비물</h2>
+  <p>이 자료는 고1 과정보다 <strong>앞에 놓인 것</strong>입니다. 필요한 것은 세 가지뿐이고, 셋 다 중학교에서 이미 만난 것들입니다.</p>
+
+  <div class="table-scroll">
+  <table>
+    <caption>이 자료에서 쓰는 도구 · 이것 말고는 쓰지 않는다</caption>
+    <thead><tr><th>도구</th><th>내용</th><th>어디에 쓰나</th></tr></thead>
+    <tbody>
+      <tr><td>피타고라스 정리<br>(Pythagorean theorem)</td><td class="num">직각삼각형에서 (밑변)² + (높이)² = (빗변)²</td><td>두 점 사이의 거리를 제곱으로 계산할 때</td></tr>
+      <tr><td>곱셈 공식</td><td class="num">(x + m)² = x² + 2mx + m²<br>(x − m)² = x² − 2mx + m²</td><td>더했을 때 2mx가 지워지는 것을 보일 때</td></tr>
+      <tr><td>중점(midpoint)</td><td class="num">선분을 똑같은 길이로 나누는 점</td><td>이 자료 전체의 조건</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p><strong>중선(median)</strong>은 삼각형의 한 꼭짓점과, 마주 보는 변의 <strong>중점</strong>을 이은 선분입니다. 꼭짓점이 셋이니 중선도 셋입니다. 여기서는 그중 하나만 봅니다.</p>
+
+  <div class="note">
+    <strong>이름에 대하여.</strong> 우리나라와 일본에서는 이 정리를 흔히 <strong>파포스(파푸스, Pappus)의 중선정리</strong>라고 부르지만,
+    다른 나라에서는 <strong>아폴로니오스(Apollonius)의 정리</strong>라고 부릅니다. 같은 정리를 가리키는 다른 이름입니다.
+    이 자료에서는 오해가 없도록 <strong>중선정리</strong>라고만 쓰겠습니다.
+    <span class="src">⚠️ 이름의 유래는 백과사전 서술을 따랐고 원문 대조는 아직 하지 않았습니다 · refs/math-notes.md 참조</span>
+  </div>
+  <!-- VERIFY: '파푸스'라는 이름이 한·일에서만 쓰인다는 서술 — 2차 자료(위키백과 요약)에만 의존. 원문 대조 필요 -->
+</section>
+
+<section class="wrap">
+  <h2>숫자 하나로 먼저 봅니다</h2>
+  <p>세 변이 <span class="math">13, 9, 10</span> 인 삼각형을 가져오겠습니다. <span class="math">BC = 10</span> 의 중점을 M이라 하면 <span class="math">BM = MC = 5</span> 입니다. 그리고 이 삼각형에서 중선 <span class="math">AM</span> 의 길이는 정확히 <strong>10</strong> 입니다. (왜 10인지는 잠시 뒤에 계산으로 나옵니다.)</p>
+  <p>이제 두 가지를 각각 계산해 보겠습니다. 한쪽은 <strong>M을 전혀 쓰지 않고</strong>, 다른 한쪽은 <strong>M만 씁니다.</strong></p>
+
+  <div class="eq">
+    <ol>
+      <li>AB² + AC² = 13² + 9² = 169 + 81 = <span class="out">250</span> <span class="why">M이 등장하지 않는다</span></li>
+      <li>2(AM² + BM²) = 2(10² + 5²) = 2 × 125 = <span class="out">250</span> <span class="why">A에서 M까지, B에서 M까지만 썼다</span></li>
+    </ol>
+  </div>
+
+  <p>두 값이 같습니다. 우연처럼 보이지만 <strong>어떤 삼각형을 가져와도</strong> 그렇습니다. 이것이 중선정리입니다.</p>
+
+  <!-- 그림1 좌표계: 30px/단위 (가로세로 같은 배율)
+       X(x) = 60 + 30x,  Y(y) = 330 − 30y
+       B(0,0)→(60,330) · C(10,0)→(360,330) · M(5,0)→(210,330)
+       A의 위치는 세 변의 길이에서 계산한다 (눈대중 아님):
+         x = (AB² − AC² + BC²) / (2·BC) = (169 − 81 + 100)/20 = 9.4
+         y² = AB² − x² = 169 − 88.36 = 80.64,  y = √80.64 = 8.97998
+         A(9.4, 8.97998) → (60+282, 330−269.399) = (342, 60.6)
+       검산: AB² = 9.4² + 80.64 = 169 ✓   AC² = 0.6² + 80.64 = 81 ✓
+             AM² = 4.4² + 80.64 = 100 ✓ → AM = 10 -->
+  <div class="stage stage--scroll">
+    <svg viewBox="0 0 760 400" role="img" aria-labelledby="t1 d1">
+      <title id="t1">세 변이 13, 9, 10인 삼각형과 그 중선 AM = 10</title>
+      <desc id="d1">삼각형 ABC에서 BC = 10 의 중점 M을 잡고 A와 이었다. AB = 13, AC = 9, BM = MC = 5, 중선 AM = 10 이다. 오른쪽 표에서 AB² + AC² = 250 과 2(AM² + BM²) = 250 이 같은 값임을 보여준다.</desc>
+
+      <g stroke="var(--hair)" stroke-width="1">
+        <line x1="60" y1="60" x2="60" y2="330"/><line x1="90" y1="60" x2="90" y2="330"/>
+        <line x1="120" y1="60" x2="120" y2="330"/><line x1="150" y1="60" x2="150" y2="330"/>
+        <line x1="180" y1="60" x2="180" y2="330"/><line x1="210" y1="60" x2="210" y2="330"/>
+        <line x1="240" y1="60" x2="240" y2="330"/><line x1="270" y1="60" x2="270" y2="330"/>
+        <line x1="300" y1="60" x2="300" y2="330"/><line x1="330" y1="60" x2="330" y2="330"/>
+        <line x1="360" y1="60" x2="360" y2="330"/><line x1="390" y1="60" x2="390" y2="330"/>
+        <line x1="60" y1="60" x2="390" y2="60"/><line x1="60" y1="90" x2="390" y2="90"/>
+        <line x1="60" y1="120" x2="390" y2="120"/><line x1="60" y1="150" x2="390" y2="150"/>
+        <line x1="60" y1="180" x2="390" y2="180"/><line x1="60" y1="210" x2="390" y2="210"/>
+        <line x1="60" y1="240" x2="390" y2="240"/><line x1="60" y1="270" x2="390" y2="270"/>
+        <line x1="60" y1="300" x2="390" y2="300"/>
+      </g>
+
+      <polygon points="342,60.6 60,330 360,330" fill="var(--given-bg)" stroke="var(--given)" stroke-width="2.5"/>
+      <line x1="342" y1="60.6" x2="210" y2="330" stroke="var(--result)" stroke-width="2.5"/>
+      <line x1="40" y1="330" x2="410" y2="330" stroke="var(--ink)" stroke-width="1.5"/>
+
+      <circle cx="342" cy="60.6" r="5" fill="var(--ink)"/>
+      <circle cx="60" cy="330" r="5" fill="var(--ink)"/>
+      <circle cx="360" cy="330" r="5" fill="var(--ink)"/>
+      <circle cx="210" cy="330" r="6" fill="var(--result)"/>
+
+      <text class="celllab" x="348" y="54">A</text>
+      <text class="celllab" x="46" y="352">B</text>
+      <text class="celllab" x="366" y="352">C</text>
+      <text class="celllab" x="204" y="352" fill="var(--result)">M</text>
+
+      <text class="celllab" x="106" y="186" fill="var(--given)">AB = 13</text>
+      <text class="celllab" x="366" y="200" fill="var(--given)">AC = 9</text>
+      <text class="celllab" x="280" y="196" fill="var(--result)">AM = 10</text>
+      <text class="celllab" x="122" y="322" fill="var(--result)">BM = 5</text>
+      <text class="celllab" x="272" y="322" fill="var(--result)">MC = 5</text>
+
+      <line x1="440" y1="40" x2="440" y2="360" stroke="var(--hair)" stroke-width="1"/>
+      <text class="rowlab" x="462" y="70">주어진 삼각형</text>
+      <text class="celllab" x="462" y="96" fill="var(--given)">AB = 13 · AC = 9 · BC = 10</text>
+      <text class="rowlab" x="462" y="144">M은 BC의 중점</text>
+      <text class="celllab" x="462" y="170" fill="var(--result)">BM = MC = 5 · AM = 10</text>
+      <text class="rowlab" x="462" y="218">두 변의 제곱의 합</text>
+      <text class="celllab" x="462" y="244">13² + 9² = 169 + 81 = 250</text>
+      <text class="rowlab" x="462" y="292">2 × (중선² + 반쪽²)</text>
+      <text class="celllab" x="462" y="318">2(10² + 5²) = 2 × 125 = 250</text>
+      <text class="celllab" x="462" y="352" fill="var(--result)">같다</text>
+    </svg>
+  </div>
+  <p class="caption">가로·세로 눈금 모두 한 칸 = 1 로 같은 배율입니다. A의 위치는 세 변의 길이에서 계산한 값입니다 — <span class="math">A(9.4, √80.64)</span>. 초록은 중점 M과 관련된 것, 파랑은 처음 주어진 것입니다.</p>
+
+  <div class="note trap">
+    <strong>여기서 틀린다 — 제곱을 빼먹는다.</strong>
+    중선정리는 <span class="math">AB + AC = 2(AM + BM)</span> 이 아닙니다.
+    위 삼각형으로 확인하면 왼쪽은 13 + 9 = 22, 오른쪽은 2(10 + 5) = 30 으로 <strong>전혀 다릅니다.</strong>
+    길이끼리는 이런 관계가 없고, <strong>제곱해서 더할 때만</strong> 관계가 생깁니다.
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>왜 성립하는가 — M을 원점에 놓는다</h2>
+  <p>이유는 딱 한 줄로 끝납니다. <strong>중점 M을 원점에 놓고 BC를 가로축에 눕히는 것</strong>입니다. 그러면 B와 C는 원점에서 <strong>서로 반대 방향으로 같은 거리</strong>에 놓입니다. 이것이 "중점"이라는 조건의 전부이고, 정리가 성립하는 이유의 전부이기도 합니다.</p>
+  <p>M을 원점에 놓았으니 <span class="math">BM = MC = m</span> 이라 하면 <span class="math">B(−m, 0)</span>, <span class="math">C(m, 0)</span> 입니다. A는 아무 데나 있어도 되므로 <span class="math">A(x, y)</span> 라고 두겠습니다.</p>
+
+  <!-- 그림2 좌표계: 30px/단위 (가로세로 같은 배율)
+       X(x) = 230 + 30x,  Y(y) = 330 − 30y
+       라벨은 문자이고, 픽셀은 그림용 값 m = 5, A = (1.5, 8) 로 찍었다.
+       B(−5,0)→(80,330) · M(0,0)→(230,330) · C(5,0)→(380,330)
+       A(1.5,8)→(230+45, 330−240)=(275,90) · H(1.5,0)→(275,330) -->
+  <div class="stage stage--scroll">
+    <svg viewBox="0 0 760 400" role="img" aria-labelledby="t2 d2">
+      <title id="t2">중점 M을 원점에 놓으면 B와 C가 −m, m 으로 대칭이 된다</title>
+      <desc id="d2">좌표평면에서 B는 (−m, 0), C는 (m, 0), A는 (x, y)에 있다. A에서 가로축에 내린 수선의 발을 H라 하면 MH = x, AH = y 이다. 오른쪽 표는 AB²과 AC²을 전개해서 더하면 2mx 항이 서로 지워지고 2(x² + y²) + 2m² 만 남는다는 것을 보여준다.</desc>
+
+      <g stroke="var(--hair)" stroke-width="1">
+        <line x1="80" y1="90" x2="80" y2="330"/><line x1="110" y1="90" x2="110" y2="330"/>
+        <line x1="140" y1="90" x2="140" y2="330"/><line x1="170" y1="90" x2="170" y2="330"/>
+        <line x1="200" y1="90" x2="200" y2="330"/><line x1="260" y1="90" x2="260" y2="330"/>
+        <line x1="290" y1="90" x2="290" y2="330"/><line x1="320" y1="90" x2="320" y2="330"/>
+        <line x1="350" y1="90" x2="350" y2="330"/><line x1="380" y1="90" x2="380" y2="330"/>
+        <line x1="80" y1="90" x2="380" y2="90"/><line x1="80" y1="120" x2="380" y2="120"/>
+        <line x1="80" y1="150" x2="380" y2="150"/><line x1="80" y1="180" x2="380" y2="180"/>
+        <line x1="80" y1="210" x2="380" y2="210"/><line x1="80" y1="240" x2="380" y2="240"/>
+        <line x1="80" y1="270" x2="380" y2="270"/><line x1="80" y1="300" x2="380" y2="300"/>
+      </g>
+
+      <line x1="50" y1="330" x2="410" y2="330" stroke="var(--ink)" stroke-width="1.5"/>
+      <text class="axlab" x="414" y="334">x</text>
+      <text class="axlab" x="236" y="78">y</text>
+
+      <polygon points="275,90 80,330 380,330" fill="var(--given-bg)" stroke="var(--given)" stroke-width="2.5"/>
+      <line x1="230" y1="70" x2="230" y2="345" stroke="var(--ink)" stroke-width="1.5"/>
+      <line x1="275" y1="90" x2="230" y2="330" stroke="var(--result)" stroke-width="2.5"/>
+      <line x1="275" y1="90" x2="275" y2="330" stroke="var(--aux)" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <path d="M 265,330 L 265,320 L 275,320" fill="none" stroke="var(--aux)" stroke-width="1.2"/>
+
+      <circle cx="275" cy="90" r="5" fill="var(--ink)"/>
+      <circle cx="80" cy="330" r="5" fill="var(--ink)"/>
+      <circle cx="380" cy="330" r="5" fill="var(--ink)"/>
+      <circle cx="230" cy="330" r="6" fill="var(--result)"/>
+      <circle cx="275" cy="330" r="4" fill="var(--aux)"/>
+
+      <text class="celllab" x="282" y="82">A(x, y)</text>
+      <text class="celllab" x="54" y="372">B(−m, 0)</text>
+      <text class="celllab" x="206" y="372" fill="var(--result)">M(0, 0)</text>
+      <text class="celllab" x="262" y="372" fill="var(--aux)">H(x, 0)</text>
+      <text class="celllab" x="356" y="372">C(m, 0)</text>
+
+      <line x1="80" y1="348" x2="230" y2="348" stroke="var(--result)" stroke-width="1"/>
+      <line x1="230" y1="348" x2="380" y2="348" stroke="var(--result)" stroke-width="1"/>
+      <text class="celllab" x="150" y="344" fill="var(--result)">m</text>
+      <text class="celllab" x="300" y="344" fill="var(--result)">m</text>
+      <line x1="230" y1="316" x2="275" y2="316" stroke="var(--aux)" stroke-width="1"/>
+      <text class="celllab" x="246" y="312" fill="var(--aux)">x</text>
+      <text class="celllab" x="282" y="220" fill="var(--aux)">y</text>
+
+      <line x1="440" y1="40" x2="440" y2="360" stroke="var(--hair)" stroke-width="1"/>
+      <text class="rowlab" x="462" y="70">M을 원점에 놓았을 뿐이다</text>
+      <text class="celllab" x="462" y="96" fill="var(--given)">B(−m, 0) · C(m, 0) · A(x, y)</text>
+      <text class="rowlab" x="462" y="144">두 변의 제곱 (피타고라스)</text>
+      <text class="celllab" x="462" y="170">AB² = (x + m)² + y²</text>
+      <text class="celllab" x="462" y="192">AC² = (x − m)² + y²</text>
+      <text class="rowlab" x="462" y="240">더하면 2mx가 서로 지워진다</text>
+      <text class="celllab" x="462" y="266" fill="var(--result)">AB² + AC² = 2(x² + y²) + 2m²</text>
+      <text class="rowlab" x="462" y="314">그런데 AM² = x² + y², BM = m</text>
+      <text class="celllab" x="462" y="340" fill="var(--result)">= 2(AM² + BM²)</text>
+    </svg>
+  </div>
+  <p class="caption">가로·세로 눈금 모두 한 칸 = 1 로 같은 배율입니다. 그림은 <span class="math">m = 5, A(1.5, 8)</span> 로 그렸지만 라벨은 문자입니다 — 어떤 <span class="math">m, x, y</span> 를 넣어도 아래 계산은 그대로입니다.</p>
+
+  <!-- 계산 근거
+       AB² = (x − (−m))² + (y − 0)² = (x + m)² + y² = x² + 2mx + m² + y²
+       AC² = (x − m)² + y²                        = x² − 2mx + m² + y²
+       합  = 2x² + 2y² + 2m²                       (+2mx 와 −2mx 가 상쇄)
+           = 2(x² + y²) + 2m²
+       AM² = (x − 0)² + (y − 0)² = x² + y²,  BM = m
+       ⇒ AB² + AC² = 2(AM² + BM²) -->
+  <div class="eq">
+    <ol>
+      <li>AB² = (x + m)² + y² = x² <span class="drop">+ 2mx</span> + m² + y² <span class="why">B(−m, 0)까지의 거리를 제곱했다</span></li>
+      <li>AC² = (x − m)² + y² = x² <span class="drop">− 2mx</span> + m² + y² <span class="why">C(m, 0)까지의 거리를 제곱했다</span></li>
+      <li>AB² + AC² = 2x² + 2y² + 2m² <span class="why"><span class="drop">+2mx</span> 와 <span class="drop">−2mx</span> 가 서로 지워진다 — 여기가 전부다</span></li>
+      <li>= 2(<span class="keep">x² + y²</span>) + 2<span class="keep">m²</span> <span class="why">묶어 놓고 보면</span></li>
+      <li>= <span class="out">2(AM² + BM²)</span> <span class="why">AM² = x² + y², BM = m 이었으니까</span></li>
+    </ol>
+  </div>
+
+  <p>지워진 <span class="math">2mx</span> 가 이 정리의 정체입니다. B와 C가 M에서 <strong>정확히 반대쪽으로 같은 거리</strong>에 있었기 때문에, x가 든 항이 부호만 다른 쌍으로 나와 사라진 것입니다. 남은 것은 <span class="math">x</span> 와 <span class="math">y</span> 가 <strong>제곱으로만</strong> 들어간 <span class="math">AM²</span> 과, M이 정한 <span class="math">m²</span> 뿐입니다.</p>
+
+  <div class="note">
+    <strong>성립 조건.</strong> 위 계산에서 쓴 것은 <strong>M이 BC의 중점</strong>(BM = MC)이라는 것뿐입니다. 그래서
+    <span class="math">AB² + AC² = 2(AM² + BM²)</span> 는 A, B, C가 평면 위의 점이고 M이 BC의 중점이기만 하면 언제나 성립합니다.
+    A가 어디에 있든(예각·둔각·직각 어느 삼각형이든) 상관없고, 놀랍게도 <strong>세 점이 한 직선 위에 있어 삼각형이 되지 않아도</strong> 성립합니다.
+    계산 어디에서도 "삼각형이다"라는 사실을 쓰지 않았기 때문입니다. (직선 위에 있으면 y = 0 인 경우일 뿐입니다.)
+    <span class="src">tools/verify-math.py 의 check_b01_theorem() 이 격자점 배치 117,649가지(그중 일직선 12,049가지)를 전수 확인합니다</span>
+  </div>
+
+  <div class="note trap">
+    <strong>여기서 틀린다 — 중점이 아닌 점에 갖다 쓴다.</strong>
+    이 식은 M이 <strong>중점일 때만</strong>의 식입니다. 각의 이등분선이나 높이의 발처럼 "그럴듯한 점"에 그대로 쓰면 틀립니다.
+    앞의 삼각형(13, 9, 10)에서 A에서 BC에 내린 <strong>수선의 발 H</strong>로 해 보면
+    <span class="math">AH² = 80.64</span>, <span class="math">BH² = 88.36</span> 이라
+    <span class="math">2(AH² + BH²) = 338</span> 이고, 이는 <span class="math">AB² + AC² = 250</span> 과 다릅니다.
+    <strong>중점이 아니면 2mx가 지워지지 않습니다.</strong>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>다른 얼굴 — 중선을 두 배로 늘리면 평행사변형</h2>
+  <p>중선 AM을 M 너머로 <strong>똑같은 길이만큼 더 늘려</strong> 점 D를 잡아 봅니다. 그러면 M은 AD의 중점이면서 동시에 BC의 중점이 됩니다. <strong>두 대각선이 서로를 이등분하는 사각형은 평행사변형(parallelogram)</strong>이므로, ABDC는 평행사변형입니다.</p>
+
+  <!-- 그림3 좌표계: 20px/단위 (가로세로 같은 배율)
+       X(x) = 60 + 20x,  Y(y) = 250 − 20y
+       A(9.4, 8.97998) → (248, 70.4)      [그림1과 같은 삼각형]
+       B(0,0) → (60,250) · C(10,0) → (260,250) · M(5,0) → (160,250)
+       D = 2M − A = (0.6, −8.97998) → (72, 429.6)
+       검산: BD² = 0.6² + 80.64 = 81 → BD = 9 = AC ✓
+             DC² = 9.4² + 80.64 = 169 → DC = 13 = AB ✓
+             AD² = 8.8² + (2·8.97998)² = 77.44 + 322.56 = 400 → AD = 20 = 2·AM ✓ -->
+  <div class="stage stage--scroll">
+    <svg viewBox="0 0 740 500" role="img" aria-labelledby="t3 d3">
+      <title id="t3">중선 AM을 두 배로 늘려 만든 평행사변형 ABDC</title>
+      <desc id="d3">삼각형 ABC의 중선 AM을 M 너머로 같은 길이만큼 연장해 점 D를 잡으면 사각형 ABDC가 평행사변형이 된다. 네 변의 제곱의 합 500과 두 대각선 AD = 20, BC = 10 의 제곱의 합 500이 같다.</desc>
+
+      <polygon points="248,70.4 60,250 72,429.6 260,250" fill="var(--aux-bg)" stroke="var(--aux)" stroke-width="1.5"/>
+      <polygon points="248,70.4 60,250 260,250" fill="var(--given-bg)" stroke="var(--given)" stroke-width="2.5"/>
+      <line x1="248" y1="70.4" x2="72" y2="429.6" stroke="var(--result)" stroke-width="2.5" stroke-dasharray="6 4"/>
+      <line x1="248" y1="70.4" x2="160" y2="250" stroke="var(--result)" stroke-width="2.5"/>
+
+      <circle cx="248" cy="70.4" r="5" fill="var(--ink)"/>
+      <circle cx="60" cy="250" r="5" fill="var(--ink)"/>
+      <circle cx="260" cy="250" r="5" fill="var(--ink)"/>
+      <circle cx="72" cy="429.6" r="5" fill="var(--aux)"/>
+      <circle cx="160" cy="250" r="6" fill="var(--result)"/>
+
+      <text class="celllab" x="254" y="62">A</text>
+      <text class="celllab" x="42" y="244">B</text>
+      <text class="celllab" x="266" y="244">C</text>
+      <text class="celllab" x="58" y="450" fill="var(--aux)">D</text>
+      <text class="celllab" x="168" y="276" fill="var(--result)">M</text>
+
+      <text class="celllab" x="104" y="150" fill="var(--given)">13</text>
+      <text class="celllab" x="262" y="156" fill="var(--given)">9</text>
+      <text class="celllab" x="30" y="346" fill="var(--aux)">9</text>
+      <text class="celllab" x="180" y="360" fill="var(--aux)">13</text>
+      <text class="celllab" x="188" y="214" fill="var(--result)">AD = 20</text>
+      <text class="celllab" x="104" y="242" fill="var(--given)">BC = 10</text>
+
+      <line x1="420" y1="60" x2="420" y2="440" stroke="var(--hair)" stroke-width="1"/>
+      <text class="rowlab" x="442" y="90">M이 AD와 BC를 모두 이등분한다</text>
+      <text class="celllab" x="442" y="116" fill="var(--aux)">⇒ ABDC는 평행사변형 · BD = AC, DC = AB</text>
+      <text class="rowlab" x="442" y="176">네 변의 제곱의 합</text>
+      <text class="celllab" x="442" y="202">13² + 9² + 13² + 9² = 500</text>
+      <text class="rowlab" x="442" y="262">두 대각선의 제곱의 합</text>
+      <text class="celllab" x="442" y="288">20² + 10² = 400 + 100 = 500</text>
+      <text class="rowlab" x="442" y="348">양변을 2로 나누면</text>
+      <text class="celllab" x="442" y="374" fill="var(--result)">13² + 9² = 2(10² + 5²) = 250</text>
+      <text class="rowlab" x="442" y="410">= 중선정리</text>
+    </svg>
+  </div>
+  <p class="caption">가로·세로 눈금 모두 한 칸 = 1 로 같은 배율입니다(그림1과 같은 삼각형을 20px/단위로 줄여 그렸습니다). 갈색은 원래 삼각형에 없던 <strong>보조선</strong>입니다 — 답이 아니라 도구입니다.</p>
+
+  <p>평행사변형에서는 <strong>네 변의 제곱의 합 = 두 대각선의 제곱의 합</strong> 이 성립합니다(평행사변형 법칙). 여기에 <span class="math">AD = 2AM</span>, <span class="math">BC = 2BM</span> 을 넣으면</p>
+
+  <!-- 2(AB² + AC²) = AD² + BC² = (2AM)² + (2BM)² = 4AM² + 4BM²
+     ⇒ AB² + AC² = 2AM² + 2BM² = 2(AM² + BM²) -->
+  <div class="eq">
+    <ol>
+      <li>2(AB² + AC²) = AD² + BC² <span class="why">BD = AC, DC = AB 이므로 네 변의 제곱의 합은 2(AB² + AC²)</span></li>
+      <li>= (2AM)² + (2BM)² = 4AM² + 4BM² <span class="why">M이 두 대각선을 반씩 나눈다</span></li>
+      <li><span class="out">AB² + AC² = 2(AM² + BM²)</span> <span class="why">양변을 2로 나눴다</span></li>
+    </ol>
+  </div>
+
+  <div class="note">
+    <strong>이건 증명이 아니라 같은 사실의 다른 얼굴입니다.</strong>
+    평행사변형 법칙 자체를 증명하려면 결국 앞 절과 똑같은 계산(좌표를 잡고 제곱을 전개하는 것)을 해야 합니다.
+    그러니 이 그림은 "중선정리를 새로 증명했다"가 아니라 <strong>"중선정리와 평행사변형 법칙은 같은 말이었다"</strong>로 읽는 것이 맞습니다.
+    자료에서 <strong>증명은 앞 절의 좌표 계산 하나뿐</strong>입니다.
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>써먹기 — 세 변을 알면 중선이 나온다</h2>
+  <p>앞에서 "중선 AM이 10"이라고 그냥 말했는데, 사실은 잴 필요가 없었습니다. 중선정리를 <span class="math">AM²</span> 에 대해 풀면 됩니다. <span class="math">BM = BC/2</span> 이므로 <span class="math">BM² = BC²/4</span> 입니다.</p>
+
+  <!-- AB² + AC² = 2(AM² + BM²),  BM = BC/2 ⇒ BM² = BC²/4
+       AB² + AC² = 2AM² + BC²/2
+       2AM² = AB² + AC² − BC²/2
+       AM² = (AB² + AC²)/2 − BC²/4 = (2AB² + 2AC² − BC²)/4
+       검산: (2·169 + 2·81 − 100)/4 = (338 + 162 − 100)/4 = 400/4 = 100 → AM = 10 -->
+  <div class="eq">
+    <ol>
+      <li>AB² + AC² = 2(AM² + BM²) <span class="why">중선정리 (M은 BC의 중점)</span></li>
+      <li>= 2AM² + <span class="keep">BC²/2</span> <span class="why">BM² = (BC/2)² = BC²/4 을 넣고 2를 곱했다</span></li>
+      <li>2AM² = AB² + AC² − BC²/2 <span class="why">AM²만 남기려고 옮겼다</span></li>
+      <li><span class="out">AM² = (2AB² + 2AC² − BC²) / 4</span> <span class="why">양변을 2로 나누고 분모를 맞췄다</span></li>
+    </ol>
+  </div>
+
+  <p>13, 9, 10 짜리 삼각형에 넣어 보면 <span class="math">AM² = (2·169 + 2·81 − 100)/4 = 400/4 = 100</span>, 그래서 <strong>AM = 10</strong> 입니다. 자를 대지 않고 나왔습니다.</p>
+
+  <div class="table-scroll">
+  <table>
+    <caption>M은 BC의 중점 · AM² = (2AB² + 2AC² − BC²)/4 · 길이는 모두 양의 실수</caption>
+    <thead>
+      <tr><th>AB</th><th>AC</th><th>BC</th><th class="num">AM²</th><th class="num">AM</th><th>이 삼각형의 특징</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="num">13</td><td class="num">9</td><td class="num">10</td><td class="num">(338 + 162 − 100)/4 = 100</td><td class="num">10</td><td>위 그림의 삼각형</td></tr>
+      <tr><td class="num">6</td><td class="num">8</td><td class="num">10</td><td class="num">(72 + 128 − 100)/4 = 25</td><td class="num">5</td><td>∠A = 90°인 직각삼각형 — 중선이 빗변의 절반</td></tr>
+      <tr><td class="num">5</td><td class="num">5</td><td class="num">6</td><td class="num">(50 + 50 − 36)/4 = 16</td><td class="num">4</td><td>이등변삼각형 — 이때만 중선이 높이와 겹친다</td></tr>
+      <tr><td class="num">7</td><td class="num">5</td><td class="num">8</td><td class="num">(98 + 50 − 64)/4 = 21</td><td class="num">√21 ≈ 4.583</td><td>중선이 정수가 아닐 수도 있다</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note">
+    <strong>두 번째 줄은 이미 알던 사실입니다.</strong> 직각삼각형에서 <span class="math">∠A = 90°</span> 이면 피타고라스 정리로 <span class="math">AB² + AC² = BC²</span> 이므로,
+    중선정리에 넣으면 <span class="math">2(AM² + BM²) = BC² = (2BM)² = 4BM²</span> 이고 따라서 <span class="math">AM² = BM²</span>, 곧 <strong>AM = BM = BC/2</strong> 입니다.
+    "직각삼각형에서 빗변의 중점은 세 꼭짓점에서 같은 거리에 있다"가 중선정리의 한 조각이었던 셈입니다.
+    <span class="src">AM = BM 은 길이가 모두 양수라서 제곱을 벗길 수 있습니다</span>
+  </div>
+
+  <div class="note trap">
+    <strong>여기서 틀린다 — BM 자리에 BC를 넣는다.</strong>
+    <span class="math">2(AM² + BC²)</span> 로 쓰면 13, 9, 10 삼각형에서 <span class="math">2(100 + 100) = 400</span> 이 되어 250과 맞지 않습니다.
+    괄호 안에 들어가는 것은 <strong>반쪽</strong> BM입니다. BC로 쓰고 싶다면 형태가 바뀝니다 —
+    <span class="math">AB² + AC² = 2AM² + BC²/2</span> (= 200 + 50 = 250). 두 식은 같은 식이고, 2와 1/2 자리를 헷갈리면 바로 틀립니다.
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>직접 움직여 보기 — 그리고 역은 성립할까</h2>
+  <p>이번에는 다른 삼각형을 씁니다. <span class="math">A(8, 6)</span>, <span class="math">B(0, 0)</span>, <span class="math">C(6, 0)</span> 이라서 <span class="math">AB² = 100</span>, <span class="math">AC² = 40</span>, 왼쪽 값은 <strong>항상 140</strong> 입니다. M을 BC를 따라(그리고 그 바깥까지) 밀어 보며 오른쪽 <span class="math">2(AM² + BM²)</span> 이 어떻게 변하는지 보세요.</p>
+  <p><strong>왼쪽은 M과 아무 상관이 없습니다.</strong> 움직이는 것은 오른쪽뿐입니다. 두 값이 같아지는 자리를 찾아보십시오 — <strong>한 군데가 아닙니다.</strong></p>
+
+  <!-- 그림4 좌표계: 36px/단위 (가로세로 같은 배율)
+       X(x) = 90 + 36x,  Y(y) = 300 − 36y
+       A(8,6)→(378,84) · B(0,0)→(90,300) · C(6,0)→(306,300)
+       중점 M(3,0)→(198,300) · 등식이 또 성립하는 점 M(5,0)→(270,300)
+       왼쪽 = AB² + AC² = (64+36) + (4+36) = 140  (M과 무관)
+       오른쪽 = 2((8−t)² + 36 + t²) = 4t² − 32t + 200
+       오른쪽 − 왼쪽 = 4t² − 32t + 60 = 4(t − 3)(t − 5) → t = 3, 5 에서 0
+       M의 좌표·선분은 모두 아래 스크립트가 식에서 계산해 찍는다 -->
+  <div class="stage stage--scroll">
+    <svg viewBox="0 0 800 440" role="img" aria-labelledby="t4 d4">
+      <title id="t4">M을 BC 위에서 움직이며 좌변과 우변을 비교하기</title>
+      <desc id="d4">삼각형 A(8,6), B(0,0), C(6,0) 위에서 점 M을 직선 BC를 따라 움직인다. 왼쪽 값 AB² + AC² = 140 은 변하지 않고 오른쪽 값 2(AM² + BM²) 만 변한다. 두 값이 같아지는 자리는 중점 M(3,0) 과, 중점이 아닌 M(5,0) 두 군데다.</desc>
+
+      <g stroke="var(--hair)" stroke-width="1" id="grid4"></g>
+      <line x1="10" y1="300" x2="430" y2="300" stroke="var(--ink)" stroke-width="1.5"/>
+      <line x1="90" y1="60" x2="90" y2="330" stroke="var(--ink)" stroke-width="1.5"/>
+      <text class="axlab" x="434" y="304">x</text>
+      <text class="axlab" x="96" y="68">y</text>
+
+      <polygon points="378,84 90,300 306,300" fill="var(--given-bg)" stroke="var(--given)" stroke-width="2.5"/>
+      <line id="bmseg" y1="300" y2="300" stroke="var(--given)" stroke-width="6" stroke-linecap="round"/>
+      <line id="amline" x1="378" y1="84" stroke="var(--result)" stroke-width="2.5"/>
+
+      <line x1="198" y1="290" x2="198" y2="310" stroke="var(--aux)" stroke-width="1.5"/>
+      <text class="celllab" x="176" y="330" fill="var(--aux)">중점</text>
+
+      <circle cx="378" cy="84" r="5" fill="var(--ink)"/>
+      <circle cx="90" cy="300" r="5" fill="var(--ink)"/>
+      <circle cx="306" cy="300" r="5" fill="var(--ink)"/>
+      <circle id="mdot" cy="300" r="6.5" fill="var(--ink)"/>
+
+      <text class="celllab" x="384" y="76">A(8, 6)</text>
+      <text class="celllab" x="66" y="322">B(0, 0)</text>
+      <text class="celllab" x="300" y="322">C(6, 0)</text>
+      <text class="celllab" id="mlab" y="284"></text>
+
+      <line x1="460" y1="40" x2="460" y2="410" stroke="var(--hair)" stroke-width="1"/>
+      <text class="rowlab" x="482" y="70">왼쪽 — AB² + AC² (M과 무관)</text>
+      <text class="celllab" x="482" y="96" fill="var(--given)">100 + 40 = 140</text>
+      <text class="rowlab" x="482" y="144">M의 위치</text>
+      <text class="celllab" x="482" y="170" id="q4m"></text>
+      <text class="rowlab" x="482" y="218">오른쪽 — 2(AM² + BM²)</text>
+      <text class="celllab" x="482" y="244" id="q4r"></text>
+      <text class="rowlab" x="482" y="292">오른쪽 − 왼쪽</text>
+      <text class="celllab" x="482" y="318" id="q4d"></text>
+      <text class="rowlab" x="482" y="366">M은 BC의 중점인가</text>
+      <text class="celllab" x="482" y="392" id="q4mid"></text>
+    </svg>
+  </div>
+
+  <div class="controls">
+    <label for="sm">M</label>
+    <input type="range" id="sm" min="-2" max="8" step="0.25" value="1">
+    <span class="readout" id="rm"></span>
+  </div>
+  <div class="controls">
+    <span class="segmented" id="mPick" role="group" aria-label="M의 위치 바로 가기"></span>
+  </div>
+
+  <div class="verdict" id="vd4">
+    <span class="tag" id="vd4Tag"></span>
+    <span class="why" id="vd4Why"></span>
+  </div>
+  <p class="caption">가로·세로 눈금 모두 한 칸 = 1 로 같은 배율입니다. M은 선분 BC를 넘어서까지 움직입니다. 판정 상자가 <strong>초록이면 중점에서 성립한 것</strong>, <strong>분홍이면 중점이 아닌데도 성립한 것</strong>입니다.</p>
+
+  <h3>역은 성립하지 않습니다</h3>
+  <p>중선정리는 <strong>"M이 중점이면 등식이 성립한다"</strong>입니다. 그 반대, 즉 <strong>"등식이 성립하면 M은 중점이다"</strong>는 <strong>거짓</strong>입니다. 위 슬라이더에서 <span class="math">M(5, 0)</span> 을 찾아보세요.</p>
+
+  <div class="table-scroll">
+  <table>
+    <caption>A(8, 6) · B(0, 0) · C(6, 0) · M(t, 0) · 왼쪽 AB² + AC² = 140 은 t와 무관</caption>
+    <thead>
+      <tr><th class="num">t</th><th class="num">BM</th><th class="num">MC</th><th class="num">AM²</th><th class="num">오른쪽 2(AM² + BM²)</th><th>판정</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="num">3</td><td class="num">3</td><td class="num">3</td><td class="num">61</td><td class="num">2(61 + 9) = 140</td><td>중점 · 등식 성립 — 중선정리</td></tr>
+      <tr><td class="num">4</td><td class="num">4</td><td class="num">2</td><td class="num">52</td><td class="num">2(52 + 16) = 136</td><td>중점 아님 · 등식 깨짐</td></tr>
+      <tr><td class="num">5</td><td class="num">5</td><td class="num">1</td><td class="num">45</td><td class="num">2(45 + 25) = 140</td><td><strong>중점 아님 · 그런데 등식 성립</strong> ← 반례</td></tr>
+      <tr><td class="num">0 (M = B)</td><td class="num">0</td><td class="num">6</td><td class="num">100</td><td class="num">2(100 + 0) = 200</td><td>중점 아님 · 등식 깨짐</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>왜 두 군데일까요. 오른쪽에서 왼쪽을 뺀 값을 t로 정리하면 <strong>이차식</strong>이 나오고, 이차식이 0이 되는 자리는 최대 두 군데이기 때문입니다.</p>
+
+  <!-- 오른쪽 − 왼쪽 = 2((8−t)² + 36 + t²) − 140 = 4t² − 32t + 200 − 140 = 4t² − 32t + 60 = 4(t−3)(t−5)
+       일반형: B(0,0), C(a,0), A(h,k), M(t,0) 이면
+         오른쪽 − 왼쪽 = 4t² − 4ht + 2ah − a² = 0
+         t = [4h ± √(16h² − 16(2ah − a²))]/8 = [h ± |h − a|]/2
+         → t = a/2 (중점)  또는  t = h − a/2
+         두 근이 겹치는 것은 h = a, 즉 A가 C 바로 위에 있을 때뿐이다.
+       이 삼각형: a = 6, h = 8 → t = 3, t = 8 − 3 = 5 ✓ -->
+  <div class="eq">
+    <ol>
+      <li>(오른쪽) − (왼쪽) = 2((8 − t)² + 6² + t²) − 140 <span class="why">AM² = (8 − t)² + 6², BM² = t²</span></li>
+      <li>= 4t² − 32t + 200 − 140 <span class="why">전개해서 정리했다</span></li>
+      <li>= <span class="out">4(t − 3)(t − 5)</span> <span class="why">0이 되는 자리는 t = 3 과 t = 5, 두 군데</span></li>
+    </ol>
+  </div>
+
+  <p>중점은 <span class="math">t = 3</span> 하나뿐인데 등식이 성립하는 자리는 둘이므로, <strong>등식만 보고 중점이라고 말할 수 없습니다.</strong> 참고로 <span class="math">t = 5</span> 는 우연이 아니라 A의 위치에 따라 정해지는 자리입니다.</p>
+
+  <div class="note trap">
+    <strong>여기서 틀린다 — "역도 당연히 성립하겠지".</strong>
+    <span class="math">t = 5</span> 인 점을 보면 정체가 드러납니다. 이 점에서는 <span class="math">BM = 5</span>, <span class="math">MC = 1</span> 로 <strong>둘이 다릅니다.</strong>
+    그래서 B와 C를 바꿔 쓴 식 <span class="math">2(AM² + MC²) = 2(45 + 1) = 92</span> 는 140과 맞지 않습니다.
+    진짜 중점에서는 BM = MC 라서 어느 쪽으로 써도 같은 값이 나옵니다.
+    <strong>"BM으로도 성립하고 MC로도 성립한다"까지 요구해야 비로소 M은 중점입니다.</strong>
+    (BM² = MC² 이고 길이는 양수이므로 BM = MC.)
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>남는 것</h2>
+  <ul>
+    <li><strong>중선정리는 제곱끼리의 관계다.</strong> M이 BC의 중점이면 <span class="math">AB² + AC² = 2(AM² + BM²)</span>. 길이끼리 더한 관계는 성립하지 않는다.</li>
+    <li><strong>성립하는 이유는 상쇄 하나다.</strong> M을 원점에 놓으면 B와 C가 −m, m 으로 놓여 <span class="math">+2mx</span> 와 <span class="math">−2mx</span> 가 지워진다. 중점이 아니면 지워지지 않는다.</li>
+    <li><strong>역은 성립하지 않는다.</strong> 등식이 성립하는 점은 중점 말고 하나 더 있다(위 삼각형의 <span class="math">M(5, 0)</span>). "성립한다 ⇒ 중점이다"라고 쓰면 틀린다.</li>
+  </ul>
+
+  <div class="note">
+    <strong>써먹을 형태로 한 번 더.</strong> <span class="math">AM² = (2AB² + 2AC² − BC²)/4</span> — 세 변을 알면 중선의 길이가 나옵니다.
+    성립 조건은 딱 하나, <strong>M이 BC의 중점</strong>이라는 것입니다.
+  </div>
+
+  <p>고1에서 만나는 <strong>「공통수학2」 도형의 방정식</strong>은 이 자료에서 한 일(도형을 좌표 위에 올리고 거리를 제곱으로 계산하는 것)을 계속합니다. 그리고 방금 나온 <span class="math">4(t − 3)(t − 5)</span> 처럼 <strong>이차식이 0이 되는 자리</strong>를 다루는 것이 다음 자료입니다.</p>
+</section>
+
+<nav class="pager wrap">
+  <span>← 기본편의 첫 챕터입니다</span>
+  <a href="../01-quadratic-vertex/index.html">01 이차함수의 최대·최소 →</a>
+</nav>
+
+<script>
+(function(){
+'use strict';
+var NS = 'http://www.w3.org/2000/svg';
+
+function num(v){
+  if(!isFinite(v)) return '—';
+  var r = Math.round(v*1000)/1000;
+  if(r === 0) r = 0;                       // −0 을 0 으로
+  return String(r).replace('-', '−');      // 화면에는 유니코드 빼기표
+}
+function line(x1,y1,x2,y2){
+  var e = document.createElementNS(NS,'line');
+  e.setAttribute('x1',x1); e.setAttribute('y1',y1);
+  e.setAttribute('x2',x2); e.setAttribute('y2',y2);
+  return e;
+}
+
+/* ══════════ 그림4 · M을 직선 BC 위에서 움직이기 ══════════
+   X(x) = 90 + 36x,  Y(y) = 300 − 36y   (36px/단위, 가로세로 동일)
+   삼각형 A(8, 6) · B(0, 0) · C(6, 0)                                  */
+function X4(x){ return 90 + 36*x; }
+function Y4(y){ return 300 - 36*y; }
+
+var AX = 8, AY = 6, BX = 0, CX = 6;        // 세 꼭짓점 (B와 C는 x축 위)
+var MIDT = (BX + CX)/2;                    // 중점 t = 3
+
+// 왼쪽 값 — 거리 공식으로 직접 계산한다 (M이 들어가지 않는다)
+var LHS = (AX-BX)*(AX-BX) + AY*AY + (AX-CX)*(AX-CX) + AY*AY;   // 100 + 40 = 140
+
+(function grid4(){
+  var g = document.getElementById('grid4'), i;
+  for(i=-2;i<=9;i++) if(i!==0) g.appendChild(line(X4(i),Y4(6),X4(i),Y4(0)));
+  for(i=1;i<=6;i++)           g.appendChild(line(X4(-2),Y4(i),X4(9),Y4(i)));
+})();
+
+var sm = document.getElementById('sm');
+
+function update4(){
+  var t   = parseFloat(sm.value);
+  var am2 = (AX-t)*(AX-t) + AY*AY;         // AM²
+  var bm2 = (t-BX)*(t-BX);                 // BM²
+  var rhs = 2*(am2 + bm2);                 // 오른쪽
+  var d   = rhs - LHS;                     // 오른쪽 − 왼쪽 = 4(t−3)(t−5)
+  var isMid = Math.abs(t - MIDT) < 1e-9;
+  var isEq  = Math.abs(d) < 1e-9;
+
+  document.getElementById('rm').textContent = 'M = (' + num(t) + ', 0)';
+
+  document.getElementById('mdot').setAttribute('cx', X4(t));
+  document.getElementById('mdot').setAttribute('fill',
+    isEq ? (isMid ? 'var(--result)' : 'var(--break)') : 'var(--ink)');
+  document.getElementById('bmseg').setAttribute('x1', X4(BX));
+  document.getElementById('bmseg').setAttribute('x2', X4(t));
+  document.getElementById('amline').setAttribute('x2', X4(t));
+  document.getElementById('amline').setAttribute('y2', Y4(0));
+
+  var ml = document.getElementById('mlab');
+  ml.setAttribute('x', X4(t) - 16);
+  ml.setAttribute('fill', isEq ? (isMid ? 'var(--result)' : 'var(--break)') : 'var(--ink)');
+  ml.textContent = 'M';
+
+  document.getElementById('q4m').textContent =
+    'M(' + num(t) + ', 0) · BM = ' + num(Math.abs(t-BX)) + ' · MC = ' + num(Math.abs(CX-t));
+  document.getElementById('q4r').textContent =
+    '2(' + num(am2) + ' + ' + num(bm2) + ') = ' + num(rhs);
+  document.getElementById('q4d').textContent = num(d);
+  document.getElementById('q4d').setAttribute('fill',
+    isEq ? 'var(--result)' : 'var(--ink)');
+  document.getElementById('q4mid').textContent = isMid ? '중점이다 (BM = MC)' : '중점이 아니다';
+  document.getElementById('q4mid').setAttribute('fill', isMid ? 'var(--result)' : 'var(--break)');
+
+  var vd  = document.getElementById('vd4'),
+      tag = document.getElementById('vd4Tag'),
+      why = document.getElementById('vd4Why');
+
+  if(isEq && isMid){
+    vd.className = 'verdict ok';
+    tag.textContent = '성립 · 중점';
+    why.textContent = 'BM = MC = 3 인 자리입니다. 양변이 모두 140 — 중선정리가 말하는 바로 그 자리입니다.';
+  } else if(isEq){
+    vd.className = 'verdict bad';
+    tag.textContent = '성립 · 중점 아님';
+    why.textContent = 'BM = 5, MC = 1 로 서로 다른데도 양변이 140으로 같습니다. '
+                    + '등식이 성립한다고 해서 M이 중점인 것은 아닙니다 — 역의 반례입니다.';
+  } else {
+    vd.className = 'verdict';
+    tag.textContent = '차이 ' + num(d);
+    why.textContent = '왼쪽 140은 M과 무관하므로 그대로이고, 오른쪽만 움직입니다. '
+                    + '차이가 0이 되는 자리는 t = 3 과 t = 5, 두 군데뿐입니다.';
+  }
+
+  var btns = document.getElementById('mPick').children, i;
+  for(i=0;i<btns.length;i++){
+    btns[i].setAttribute('aria-pressed',
+      Math.abs(parseFloat(btns[i].getAttribute('data-t')) - t) < 1e-9 ? 'true' : 'false');
+  }
+}
+
+(function buildPicker(){
+  var host = document.getElementById('mPick');
+  var SPOTS = [
+    {lab:'M = B (t = 0)', t:0},
+    {lab:'중점 (t = 3)',  t:3},
+    {lab:'t = 5',         t:5}
+  ];
+  SPOTS.forEach(function(s){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = s.lab;
+    b.setAttribute('data-t', s.t);
+    b.setAttribute('aria-pressed','false');
+    b.addEventListener('click', function(){ sm.value = s.t; update4(); });
+    host.appendChild(b);
+  });
+})();
+
+sm.addEventListener('input', update4);
+update4();
+})();
+</script>
+
+</body>
+</html>

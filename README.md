@@ -21,7 +21,7 @@ python3 -m http.server 8000
 CLAUDE.md                  작업 규칙. Claude Code가 매 세션 자동으로 읽습니다
 index.html                 목차. 챕터를 추가하면 여기에도 반드시 항목 추가
 assets/base.css            공통 디자인 토큰. 색은 여기서만 정의합니다
-topics/NN-슬러그/index.html  챕터별 자료
+topics/NN-슬러그/index.html  챕터별 자료 (기본편은 topics/bNN-슬러그/)
 _template/index.html       새 챕터 시작용 템플릿
 tools/verify-math.py       자료에 실린 값과 주장을 식으로 재확인
 refs/math-notes.md         쓴 정의·정리와 성립 조건, 유도 과정 누적
