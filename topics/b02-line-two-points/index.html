@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>B02 두 점을 지나는 직선 — 고1 수학 직관</title>
+<link rel="stylesheet" href="../../assets/base.css">
+</head>
+<body>
+
+<nav class="topbar wrap">
+  <a href="../../index.html">← 고1 수학 직관</a>
+  <span>기본 B02 / 두 점을 지나는 직선</span>
+</nav>
+
+<header class="hero wrap">
+  <p class="eyebrow">b02 · line through two points</p>
+  <h1>점 두 개를 찍으면<br><em>직선 하나</em>가<br>정해진다</h1>
+  <p class="lead">점 (1, 3)과 (3, 7)을 지나는 직선의 식은 <span class="math">y = 2x + 1</span> 입니다. 두 점만 알면 식이 나옵니다. 이 자료는 그 식을 <strong>외우지 않고 매번 만들어 쓰는 법</strong>을 다룹니다. 공식은 하나뿐입니다 — <span class="math">y − y₁ = (기울기) × (x − x₁)</span>.</p>
+</header>
+
+<section class="wrap">
+  <h2>먼저 준비물</h2>
+  <p>고1 과정보다 <strong>앞에 놓인 것</strong>입니다. 필요한 것은 셋뿐입니다.</p>
+
+  <div class="table-scroll">
+  <table>
+    <caption>이 자료에서 쓰는 도구 · 이것 말고는 쓰지 않는다</caption>
+    <thead><tr><th>도구</th><th>내용</th><th>어디에 쓰나</th></tr></thead>
+    <tbody>
+      <tr><td>좌표평면</td><td class="num">점 (x, y) — 가로 x칸, 세로 y칸</td><td>전부</td></tr>
+      <tr><td>나눗셈과 분수</td><td class="num">세로 변화 ÷ 가로 변화</td><td>기울기를 구할 때</td></tr>
+      <tr><td>괄호 풀기</td><td class="num">m(x − p) = mx − mp</td><td>식을 y = ax + b 꼴로 정리할 때</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note">
+    <strong>기호 약속.</strong> 두 점을 <span class="math">(x₁, y₁)</span>, <span class="math">(x₂, y₂)</span> 라고 부릅니다.
+    아래에 붙은 작은 1, 2는 <strong>번호표</strong>일 뿐 곱셈이나 거듭제곱이 아닙니다.
+    <span class="math">x₁</span>은 "첫 번째 점의 x", <span class="math">x₂</span>는 "두 번째 점의 x"라고 읽습니다.
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>직선은 "계단이 일정한" 길이다</h2>
+  <p>이 자료에서는 직선을 <strong>계단</strong>이라고 부르겠습니다. 끝까지 계단으로 갑니다.</p>
+  <p>점 <span class="math">A(1, 3)</span> 에서 점 <span class="math">B(3, 7)</span> 로 가 봅시다. 대각선으로 곧장 가는 대신 <strong>오른쪽으로 갔다가 위로 올라가는</strong> 두 걸음으로 나눕니다.</p>
+
+  <div class="eq">
+    <ol>
+      <li>가로로 간 거리 = 3 − 1 = <span class="out">2</span> <span class="why">나중 x에서 처음 x를 뺀다</span></li>
+      <li>세로로 간 거리 = 7 − 3 = <span class="out">4</span> <span class="why">나중 y에서 처음 y를 뺀다</span></li>
+      <li>기울기 = 세로 ÷ 가로 = 4 ÷ 2 = <span class="out">2</span> <span class="why">가로로 1칸 갈 때 세로로 2칸 오른다</span></li>
+    </ol>
+  </div>
+
+  <p><strong>기울기(slope)</strong>는 "가로 한 칸에 세로 몇 칸"인지를 나타내는 수입니다. 이 직선은 가로 1칸마다 세로 2칸씩 오르는 계단입니다.</p>
+
+  <!-- 그림1·2 공통 좌표계: 36px/단위 (가로세로 같은 배율)
+       X(x) = 90 + 36x,  Y(y) = 350 − 36y
+       직선 y = 2x + 1 위의 격자점 (모두 식에서 계산):
+         (−1,−1)→(54,386) (0,1)→(90,314) (1,3)→(126,242)
+         (2,5)→(162,170)  (3,7)→(198,98) (4,9)→(234,26)
+       창은 x∈[−1,4], y∈[−1,9] 이라 직선이 창의 두 모서리 (54,386)–(234,26) 을 잇는다
+       계단 코너 (3,3)→(198,242) -->
+  <div class="stage stage--scroll">
+    <svg viewBox="0 0 780 420" role="img" aria-labelledby="t1 d1">
+      <title id="t1">두 점 A(1, 3)과 B(3, 7) 사이의 계단 — 가로 2, 세로 4</title>
+      <desc id="d1">좌표평면 위에 점 A(1, 3)과 B(3, 7)을 찍고 두 점을 지나는 직선을 그렸다. A에서 오른쪽으로 2칸, 위로 4칸 가면 B에 닿는다. 세로 4를 가로 2로 나눈 2가 이 직선의 기울기다.</desc>
+
+      <g stroke="var(--hair)" stroke-width="1">
+        <line x1="54" y1="26" x2="54" y2="386"/><line x1="90" y1="26" x2="90" y2="386"/>
+        <line x1="126" y1="26" x2="126" y2="386"/><line x1="162" y1="26" x2="162" y2="386"/>
+        <line x1="198" y1="26" x2="198" y2="386"/><line x1="234" y1="26" x2="234" y2="386"/>
+        <line x1="270" y1="26" x2="270" y2="386"/>
+        <line x1="54" y1="26" x2="270" y2="26"/><line x1="54" y1="62" x2="270" y2="62"/>
+        <line x1="54" y1="98" x2="270" y2="98"/><line x1="54" y1="134" x2="270" y2="134"/>
+        <line x1="54" y1="170" x2="270" y2="170"/><line x1="54" y1="206" x2="270" y2="206"/>
+        <line x1="54" y1="242" x2="270" y2="242"/><line x1="54" y1="278" x2="270" y2="278"/>
+        <line x1="54" y1="314" x2="270" y2="314"/><line x1="54" y1="350" x2="270" y2="350"/>
+        <line x1="54" y1="386" x2="270" y2="386"/>
+      </g>
+      <line x1="44" y1="314" x2="280" y2="314" stroke="var(--ink)" stroke-width="1.5"/>
+      <line x1="90" y1="16" x2="90" y2="396" stroke="var(--ink)" stroke-width="1.5"/>
+      <text class="axlab" x="284" y="318">x</text>
+      <text class="axlab" x="96" y="24">y</text>
+      <text class="axlab" x="78" y="330">O</text>
+      <text class="axlab" x="122" y="330">1</text>
+      <text class="axlab" x="194" y="330">3</text>
+      <text class="axlab" x="70" y="246">3</text>
+      <text class="axlab" x="70" y="102">7</text>
+
+      <!-- 계단: A(126,242) → 코너(198,242) → B(198,98) -->
+      <path d="M 126,242 L 198,242 L 198,98" fill="none" stroke="var(--aux)" stroke-width="2.5"/>
+      <line x1="54" y1="386" x2="234" y2="26" stroke="var(--given)" stroke-width="2.5"/>
+
+      <circle cx="126" cy="242" r="6" fill="var(--result)"/>
+      <circle cx="198" cy="98" r="6" fill="var(--result)"/>
+      <text class="celllab" x="70" y="230" fill="var(--result)">A(1, 3)</text>
+      <text class="celllab" x="208" y="86" fill="var(--result)">B(3, 7)</text>
+      <text class="celllab" x="140" y="262" fill="var(--aux)">가로 2</text>
+      <text class="celllab" x="204" y="176" fill="var(--aux)">세로 4</text>
+
+      <line x1="330" y1="40" x2="330" y2="380" stroke="var(--hair)" stroke-width="1"/>
+      <text class="rowlab" x="352" y="70">두 점</text>
+      <text class="celllab" x="352" y="96" fill="var(--result)">A(1, 3) · B(3, 7)</text>
+      <text class="rowlab" x="352" y="144">가로 변화 = 나중 x − 처음 x</text>
+      <text class="celllab" x="352" y="170" fill="var(--aux)">3 − 1 = 2</text>
+      <text class="rowlab" x="352" y="218">세로 변화 = 나중 y − 처음 y</text>
+      <text class="celllab" x="352" y="244" fill="var(--aux)">7 − 3 = 4</text>
+      <text class="rowlab" x="352" y="292">기울기 = 세로 ÷ 가로</text>
+      <text class="celllab" x="352" y="318" fill="var(--result)">4 ÷ 2 = 2</text>
+      <text class="celllab" x="352" y="352">가로 1칸에 세로 2칸</text>
+    </svg>
+  </div>
+  <p class="caption">가로·세로 눈금 모두 한 칸 = 1 로 같은 배율입니다. 갈색 계단은 <strong>보조선</strong>입니다 — 실제 직선의 일부가 아니라 기울기를 재려고 그린 것입니다.</p>
+
+  <div class="note trap">
+    <strong>여기서 틀린다 — 가로와 세로를 뒤집는다.</strong>
+    기울기는 <strong>세로 ÷ 가로</strong>입니다. 뒤집어서 <span class="math">2 ÷ 4 = 1/2</span> 로 쓰면
+    직선이 <span class="math">y = ½x + 5/2</span> 가 되고, <span class="math">x = 3</span> 을 넣으면 4가 나와
+    B(3, 7)을 지나지 않습니다. 순서를 이렇게 외우세요 — <strong>"올라간 만큼을 걸어간 만큼으로 나눈다."</strong>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>어느 두 점을 골라도 기울기는 같다</h2>
+  <p>여기가 직선의 핵심입니다. 같은 직선 위에서라면 <strong>어느 두 점을 골라 계단을 만들어도 세로÷가로가 같습니다.</strong> 계단을 크게 잡든 작게 잡든, 심지어 <strong>거꾸로 내려가며</strong> 재도 같습니다.</p>
+  <p>이 성질이 없다면 "이 직선의 기울기"라는 말 자체가 성립하지 않습니다. 어느 두 점을 골랐느냐에 따라 답이 달라질 테니까요. 직선이 특별한 이유가 바로 이것입니다.</p>
+
+  <!-- 그림2 좌표계는 그림1과 동일: X(x) = 90 + 36x, Y(y) = 350 − 36y
+       계단 세 개 (모두 y = 2x + 1 위의 격자점)
+         ① (−1,−1)→(0,1)   코너 (0,−1)=(90,386)   가로 1, 세로 2   → 2/1 = 2
+         ② (0,1)→(2,5)     코너 (2,1)=(162,314)   가로 2, 세로 4   → 4/2 = 2
+         ③ (4,9)→(1,3)     코너 (1,9)=(126,26)    가로 −3, 세로 −6 → −6/−3 = 2 -->
+  <div class="stage stage--scroll">
+    <svg viewBox="0 0 780 420" role="img" aria-labelledby="t2 d2">
+      <title id="t2">같은 직선 위에서 계단을 어떻게 잡아도 세로÷가로는 2로 같다</title>
+      <desc id="d2">직선 y = 2x + 1 위에 크기가 다른 계단 세 개를 그렸다. 가로 1 세로 2, 가로 2 세로 4, 그리고 거꾸로 내려가는 가로 −3 세로 −6. 세 계단 모두 세로를 가로로 나누면 2가 된다.</desc>
+
+      <g stroke="var(--hair)" stroke-width="1">
+        <line x1="54" y1="26" x2="54" y2="386"/><line x1="90" y1="26" x2="90" y2="386"/>
+        <line x1="126" y1="26" x2="126" y2="386"/><line x1="162" y1="26" x2="162" y2="386"/>
+        <line x1="198" y1="26" x2="198" y2="386"/><line x1="234" y1="26" x2="234" y2="386"/>
+        <line x1="270" y1="26" x2="270" y2="386"/>
+        <line x1="54" y1="26" x2="270" y2="26"/><line x1="54" y1="62" x2="270" y2="62"/>
+        <line x1="54" y1="98" x2="270" y2="98"/><line x1="54" y1="134" x2="270" y2="134"/>
+        <line x1="54" y1="170" x2="270" y2="170"/><line x1="54" y1="206" x2="270" y2="206"/>
+        <line x1="54" y1="242" x2="270" y2="242"/><line x1="54" y1="278" x2="270" y2="278"/>
+        <line x1="54" y1="314" x2="270" y2="314"/><line x1="54" y1="350" x2="270" y2="350"/>
+        <line x1="54" y1="386" x2="270" y2="386"/>
+      </g>
+      <line x1="44" y1="314" x2="280" y2="314" stroke="var(--ink)" stroke-width="1.5"/>
+      <line x1="90" y1="16" x2="90" y2="396" stroke="var(--ink)" stroke-width="1.5"/>
+      <text class="axlab" x="284" y="318">x</text>
+      <text class="axlab" x="96" y="24">y</text>
+      <text class="axlab" x="78" y="330">O</text>
+
+      <line x1="54" y1="386" x2="234" y2="26" stroke="var(--given)" stroke-width="2.5"/>
+
+      <path d="M 54,386 L 90,386 L 90,314" fill="none" stroke="var(--aux)" stroke-width="2.5"/>
+      <path d="M 90,314 L 162,314 L 162,170" fill="none" stroke="var(--aux)" stroke-width="2.5"/>
+      <path d="M 234,26 L 126,26 L 126,242" fill="none" stroke="var(--break)" stroke-width="2.5"/>
+
+      <circle cx="54" cy="386" r="4.5" fill="var(--result)"/>
+      <circle cx="90" cy="314" r="4.5" fill="var(--result)"/>
+      <circle cx="162" cy="170" r="4.5" fill="var(--result)"/>
+      <circle cx="126" cy="242" r="4.5" fill="var(--result)"/>
+      <circle cx="234" cy="26" r="4.5" fill="var(--result)"/>
+
+      <text class="celllab" x="44" y="404" fill="var(--aux)">① 1 · 2</text>
+      <text class="celllab" x="106" y="332" fill="var(--aux)">② 2 · 4</text>
+      <text class="celllab" x="140" y="20" fill="var(--break)">③ −3 · −6 (거꾸로)</text>
+
+      <line x1="330" y1="40" x2="330" y2="380" stroke="var(--hair)" stroke-width="1"/>
+      <text class="rowlab" x="352" y="70">① (−1, −1) → (0, 1)</text>
+      <text class="celllab" x="352" y="96" fill="var(--aux)">세로 2 ÷ 가로 1 = 2</text>
+      <text class="rowlab" x="352" y="144">② (0, 1) → (2, 5)</text>
+      <text class="celllab" x="352" y="170" fill="var(--aux)">세로 4 ÷ 가로 2 = 2</text>
+      <text class="rowlab" x="352" y="218">③ (4, 9) → (1, 3) · 거꾸로</text>
+      <text class="celllab" x="352" y="244" fill="var(--break)">세로 (−6) ÷ 가로 (−3) = 2</text>
+      <text class="rowlab" x="352" y="292">셋 다 같다</text>
+      <text class="celllab" x="352" y="318" fill="var(--result)">이 직선의 기울기 = 2</text>
+      <text class="celllab" x="352" y="352">계단은 크기만 다른 닮은꼴이다</text>
+    </svg>
+  </div>
+  <p class="caption">가로·세로 눈금 모두 한 칸 = 1 로 같은 배율입니다. 세 계단은 <strong>크기만 다르고 모양이 같은 닮은 삼각형</strong>이라서 세로:가로 비가 같습니다. ③처럼 거꾸로 재면 가로도 세로도 음수가 되는데, <strong>음수 ÷ 음수 = 양수</strong>라서 결과는 그대로입니다.</p>
+
+  <div class="note">
+    <strong>그래서 순서를 바꿔도 됩니다.</strong> 두 점 중 어느 쪽을 "처음"으로 삼든 기울기는 같습니다.
+    <span class="math">(y₂ − y₁) / (x₂ − x₁)</span> 의 분자와 분모에 각각 <strong>−1을 곱한 것</strong>이
+    <span class="math">(y₁ − y₂) / (x₁ − x₂)</span> 이고, 분자와 분모에 같은 수를 곱해도 분수의 값은 변하지 않기 때문입니다.
+  </div>
+
+  <div class="note trap">
+    <strong>여기서 틀린다 — 순서를 섞는다.</strong>
+    바꾸려면 <strong>분자와 분모를 함께</strong> 바꿔야 합니다.
+    한쪽만 바꿔서 <span class="math">(y₂ − y₁) / (x₁ − x₂)</span> 로 쓰면 부호가 뒤집힙니다.
+    A(1, 3), B(3, 7)에서 <span class="math">(7 − 3) / (1 − 3) = 4 / (−2) = −2</span> 가 되고,
+    이걸로 만든 직선 <span class="math">y = −2x + 5</span> 에 <span class="math">x = 3</span> 을 넣으면 −1이 나와
+    B(3, 7)을 지나지 않습니다. <strong>순서는 자유지만 위아래를 같은 순서로 맞춰야 합니다.</strong>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>이제 식을 만듭니다</h2>
+  <p>기울기를 알았으니 식을 씁니다. 여기서 하는 일은 딱 하나 — <strong>"직선 위의 아무 점이나 하나 데려와서, 그 점도 같은 계단 비율을 지켜야 한다"</strong>고 적는 것입니다.</p>
+
+  <p>직선 위의 점을 하나 데려와 <span class="math">(x, y)</span> 라고 부릅시다. 이름이 <span class="math">x₁</span>, <span class="math">x₂</span> 처럼 번호가 없는 이유는, 이 점이 <strong>고정된 점이 아니라 직선 위를 돌아다니는 점</strong>이기 때문입니다.</p>
+
+  <!-- 유도 (계산 근거)
+       ① 아는 점 (x₁,y₁) 과 떠도는 점 (x,y) 사이의 기울기 = (y − y₁)/(x − x₁)     [x ≠ x₁ 일 때만 정의됨]
+       ② 같은 직선이므로 이 값은 m 과 같아야 한다:  (y − y₁)/(x − x₁) = m
+       ③ 양변에 (x − x₁) 을 곱한다:  y − y₁ = m(x − x₁)
+       ④ ③은 x = x₁ 일 때도 참이다 (양변이 0 이 된다) → ①의 구멍이 메워진다
+       ⑤ m 자리에 (y₂−y₁)/(x₂−x₁) 을 넣으면 두 점만으로 쓴 식이 된다 -->
+  <div class="eq">
+    <ol>
+      <li>(떠도는 점과 아는 점 사이의 기울기) = <span class="keep">(y − y₁) / (x − x₁)</span> <span class="why">계단 비율을 그대로 적었다 · 지금은 x ≠ x₁</span></li>
+      <li>(y − y₁) / (x − x₁) = m <span class="why">같은 직선이니 앞에서 구한 기울기 m과 같아야 한다</span></li>
+      <li><span class="out">y − y₁ = m(x − x₁)</span> <span class="why">양변에 (x − x₁)을 곱해 분모를 없앴다</span></li>
+      <li>m = <span class="keep">(y₂ − y₁) / (x₂ − x₁)</span> <span class="why">m은 두 점으로 구한 값</span></li>
+      <li><span class="out">y − y₁ = ((y₂ − y₁) / (x₂ − x₁)) · (x − x₁)</span> <span class="why">4를 3에 넣었다 — 이것이 완성된 식</span></li>
+    </ol>
+  </div>
+
+  <p>2번에서 3번으로 갈 때 분모가 사라진 것이 중요합니다. 2번은 <span class="math">x = x₁</span> 일 때 분모가 0이라 <strong>말이 안 되는 식</strong>이지만, 3번은 <span class="math">x = x₁</span> 을 넣으면 <span class="math">y − y₁ = m · 0 = 0</span>, 즉 <span class="math">y = y₁</span> 이 되어 <strong>아는 점 자신을 올바르게 가리킵니다.</strong> 곱해서 분모를 없앤 덕분에 뚫려 있던 구멍 하나가 메워진 것입니다.</p>
+
+  <div class="note">
+    <strong>성립 조건은 하나뿐입니다 — <span class="math">x₁ ≠ x₂</span>.</strong>
+    두 점의 x가 같으면 <span class="math">x₂ − x₁ = 0</span> 이라 기울기를 구하는 나눗셈 자체가 불가능합니다.
+    이때는 두 점이 <strong>같은 세로줄</strong> 위에 있다는 뜻이고, 그 직선은 <span class="math">x = (그 값)</span> 이라는
+    다른 모양의 식으로 써야 합니다. 뒤에서 자세히 봅니다.
+    <span class="src">그리고 두 점은 서로 달라야 합니다 — 같은 점 두 개로는 직선이 정해지지 않습니다</span>
+  </div>
+
+  <h3>기준점은 둘 중 아무거나 써도 됩니다</h3>
+  <p>3번 식의 <span class="math">(x₁, y₁)</span> 자리에 <strong>B를 넣어도 같은 직선</strong>이 나옵니다. A(1, 3), B(3, 7)로 직접 해 보면</p>
+
+  <!-- A 기준: y − 3 = 2(x − 1) = 2x − 2 → y = 2x + 1
+       B 기준: y − 7 = 2(x − 3) = 2x − 6 → y = 2x + 1   ← 같다
+       일반적으로 y₁ − m·x₁ = y₂ − m·x₂ 인 이유는 y₂ − y₁ = m(x₂ − x₁) 이기 때문 -->
+  <div class="eq">
+    <ol>
+      <li>A 기준: y − 3 = 2(x − 1) = 2x − 2 → <span class="out">y = 2x + 1</span> <span class="why">양변에 3을 더했다</span></li>
+      <li>B 기준: y − 7 = 2(x − 3) = 2x − 6 → <span class="out">y = 2x + 1</span> <span class="why">양변에 7을 더했다 — 같은 식</span></li>
+    </ol>
+  </div>
+
+  <p>우연이 아닙니다. 두 식이 같으려면 <span class="math">y₁ − m·x₁ = y₂ − m·x₂</span> 여야 하는데, 이것을 정리하면 <span class="math">y₂ − y₁ = m(x₂ − x₁)</span> 이고, 이건 <strong>m의 정의 그 자체</strong>입니다. 그러니 항상 같습니다.</p>
+
+  <div class="stats">
+    <div><span class="n">y − y₁ = m(x − x₁)</span><span class="t">점-기울기 꼴 · 아는 점 하나와 기울기로 쓴다</span></div>
+    <div><span class="n">y = mx + b</span><span class="t">기울기-절편 꼴 · 괄호를 풀고 정리하면 나온다 (b = y₁ − m·x₁)</span></div>
+  </div>
+
+  <p style="margin-top:24px"><span class="math">b</span> 는 <strong>y절편</strong>입니다. <span class="math">x = 0</span> 을 넣으면 <span class="math">y = b</span> 이므로, 직선이 세로축을 지나는 높이입니다. 위 예에서는 <span class="math">b = 1</span> 이고, 실제로 그림의 직선은 (0, 1)을 지납니다.</p>
+</section>
+
+<section class="wrap">
+  <h2>손으로 세 번 해 봅니다</h2>
+  <p>순서는 언제나 같습니다. 이 세 줄만 기억하면 됩니다.</p>
+
+  <div class="table-scroll">
+  <table>
+    <caption>두 점 (x₁, y₁), (x₂, y₂)가 주어졌을 때 · 조건 x₁ ≠ x₂</caption>
+    <thead><tr><th>단계</th><th>하는 일</th><th>결과</th></tr></thead>
+    <tbody>
+      <tr><td class="num">①</td><td>기울기를 구한다</td><td class="num">m = (y₂ − y₁) / (x₂ − x₁)</td></tr>
+      <tr><td class="num">②</td><td>점 하나를 골라 넣는다 (둘 중 아무거나)</td><td class="num">y − y₁ = m(x − x₁)</td></tr>
+      <tr><td class="num">③</td><td>괄호를 풀고 정리한 뒤 <strong>두 점을 다시 대입해 검산한다</strong></td><td class="num">y = mx + b</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>예시 1 · 기울기가 정수 — (1, 3)과 (3, 7)</h3>
+  <div class="eq">
+    <ol>
+      <li>m = (7 − 3) / (3 − 1) = 4 / 2 = <span class="out">2</span> <span class="why">① 세로 4를 가로 2로 나눈다</span></li>
+      <li>y − 3 = 2(x − 1) <span class="why">② 점 (1, 3)을 넣었다</span></li>
+      <li>y − 3 = 2x − 2 <span class="why">③ 괄호를 풀었다 — 2 × x 와 2 × (−1)</span></li>
+      <li><span class="out">y = 2x + 1</span> <span class="why">양변에 3을 더했다: −2 + 3 = 1</span></li>
+      <li>검산 x = 1 → 2 + 1 = 3 ✓ · x = 3 → 6 + 1 = 7 ✓ <span class="why">두 점을 모두 지난다</span></li>
+    </ol>
+  </div>
+
+  <h3>예시 2 · 기울기가 분수 — (2, 1)과 (6, 4)</h3>
+  <p>기울기가 꼭 정수일 필요는 없습니다. 나누어떨어지지 않으면 <strong>분수 그대로</strong> 둡니다.</p>
+  <div class="eq">
+    <ol>
+      <li>m = (4 − 1) / (6 − 2) = <span class="out">3/4</span> <span class="why">① 가로 4칸에 세로 3칸 — 완만한 계단</span></li>
+      <li>y − 1 = (3/4)(x − 2) <span class="why">② 점 (2, 1)을 넣었다</span></li>
+      <li>y − 1 = (3/4)x − 3/2 <span class="why">③ (3/4) × 2 = 3/2</span></li>
+      <li><span class="out">y = (3/4)x − 1/2</span> <span class="why">양변에 1을 더했다: −3/2 + 1 = −1/2</span></li>
+      <li>검산 x = 2 → 3/2 − 1/2 = 1 ✓ · x = 6 → 9/2 − 1/2 = 4 ✓ <span class="why">분수도 검산은 똑같이</span></li>
+    </ol>
+  </div>
+
+  <h3>예시 3 · 음수가 섞였을 때 — (−1, 5)와 (3, −3)</h3>
+  <p>여기가 가장 많이 틀리는 예입니다. <strong>빼기의 빼기</strong>가 두 번 나옵니다.</p>
+  <div class="eq">
+    <ol>
+      <li>가로 = 3 − (−1) = 3 + 1 = <span class="keep">4</span> <span class="why">① 음수를 빼면 더하기가 된다</span></li>
+      <li>세로 = (−3) − 5 = <span class="keep">−8</span> <span class="why">내려갔으므로 음수</span></li>
+      <li>m = (−8) / 4 = <span class="out">−2</span> <span class="why">기울기가 음수 = 오른쪽으로 갈수록 내려간다</span></li>
+      <li>y − 5 = −2(x − (−1)) = −2(x + 1) <span class="why">② 점 (−1, 5)를 넣었다 — 여기서도 빼기의 빼기</span></li>
+      <li>y − 5 = −2x − 2 <span class="why">③ −2 × x 와 −2 × 1</span></li>
+      <li><span class="out">y = −2x + 3</span> <span class="why">양변에 5를 더했다: −2 + 5 = 3</span></li>
+      <li>검산 x = −1 → 2 + 3 = 5 ✓ · x = 3 → −6 + 3 = −3 ✓ <span class="why">두 점을 모두 지난다</span></li>
+    </ol>
+  </div>
+
+  <div class="table-scroll">
+  <table>
+    <caption>세 예시 정리 · 모두 두 점을 대입해 확인했다</caption>
+    <thead><tr><th>두 점</th><th class="num">가로</th><th class="num">세로</th><th class="num">기울기 m</th><th class="num">완성된 식</th><th>모양</th></tr></thead>
+    <tbody>
+      <tr><td class="num">(1, 3) · (3, 7)</td><td class="num">2</td><td class="num">4</td><td class="num">2</td><td class="num">y = 2x + 1</td><td>가파르게 오른다</td></tr>
+      <tr><td class="num">(2, 1) · (6, 4)</td><td class="num">4</td><td class="num">3</td><td class="num">3/4</td><td class="num">y = (3/4)x − 1/2</td><td>완만하게 오른다</td></tr>
+      <tr><td class="num">(−1, 5) · (3, −3)</td><td class="num">4</td><td class="num">−8</td><td class="num">−2</td><td class="num">y = −2x + 3</td><td>내려간다</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note trap">
+    <strong>여기서 틀린다 — 음수 좌표에서 부호를 놓친다.</strong>
+    예시 3의 ④에서 <span class="math">x − (−1)</span> 을 <span class="math">x − 1</span> 로 쓰면
+    <span class="math">y = −2x + 7</span> 이 나옵니다. 여기에 <span class="math">x = −1</span> 을 넣으면 9가 나와
+    주어진 점 (−1, 5)를 지나지 않습니다. 공식의 자리는 <strong>항상 "빼기"</strong>이고,
+    그 자리에 음수가 들어가면 <strong>더하기로 바뀝니다.</strong>
+    <span class="src">이래서 ⑤번 검산을 반드시 합니다 — 틀렸는지 바로 드러납니다</span>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>직접 움직여 보기</h2>
+  <p>점 <span class="math">P₁(1, 2)</span> 는 고정하고, <span class="math">P₂</span> 를 슬라이더로 옮겨 봅니다. 계단과 기울기와 식이 함께 따라옵니다.</p>
+  <p>특히 <strong>세 자리를 꼭 지나가 보세요.</strong> ① <span class="math">x₂ = 1</span> (분모가 0이 되는 자리) ② <span class="math">y₂ = 2</span> (기울기가 0이 되는 자리) ③ <span class="math">P₂ = (1, 2)</span> (두 점이 겹치는 자리). 여기서 무엇이 무너지는지가 이 자료의 조건 전부입니다.</p>
+
+  <!-- 그림3 좌표계: 30px/단위 (가로세로 같은 배율)
+       X(x) = 150 + 30x,  Y(y) = 270 − 30y
+       창 x∈[−4,8] → 30‥390 · y∈[−4,8] → 390‥30
+       P₁(1,2) → (180,210) · 처음의 P₂(5,6) → (300,90)
+       직선·계단·점의 좌표는 모두 아래 스크립트가 식에서 계산해 찍는다 -->
+  <div class="stage stage--scroll">
+    <svg viewBox="0 0 800 440" role="img" aria-labelledby="t3 d3">
+      <title id="t3">두 점을 움직이며 기울기와 직선의 식이 어떻게 변하는지 보기</title>
+      <desc id="d3">고정된 점 P₁(1, 2)와 슬라이더로 움직이는 점 P₂를 지나는 직선을 그린다. 두 점 사이의 계단(가로 변화와 세로 변화), 기울기, 점-기울기 꼴 식, 정리한 식이 오른쪽에 함께 표시된다. P₂의 x가 1이 되면 분모가 0이 되어 식을 쓸 수 없다.</desc>
+
+      <g stroke="var(--hair)" stroke-width="1" id="grid3"></g>
+      <line x1="20" y1="270" x2="400" y2="270" stroke="var(--ink)" stroke-width="1.5"/>
+      <line x1="150" y1="20" x2="150" y2="400" stroke="var(--ink)" stroke-width="1.5"/>
+      <text class="axlab" x="404" y="274">x</text>
+      <text class="axlab" x="156" y="28">y</text>
+      <text class="axlab" x="138" y="284">O</text>
+
+      <path id="step3" fill="none" stroke="var(--aux)" stroke-width="2.5"/>
+      <line id="line3" stroke="var(--given)" stroke-width="2.5"/>
+      <circle cx="180" cy="210" r="6" fill="var(--result)"/>
+      <circle id="p2dot" r="6" fill="var(--result)"/>
+      <text class="celllab" x="106" y="198" fill="var(--result)">P₁(1, 2)</text>
+      <text class="celllab" id="p2lab" fill="var(--result)"></text>
+
+      <line x1="440" y1="40" x2="440" y2="410" stroke="var(--hair)" stroke-width="1"/>
+      <text class="rowlab" x="462" y="70">두 점</text>
+      <text class="celllab" x="462" y="96" id="q3pts" fill="var(--result)"></text>
+      <text class="rowlab" x="462" y="144">가로 변화 x₂ − x₁</text>
+      <text class="celllab" x="462" y="170" id="q3dx" fill="var(--aux)"></text>
+      <text class="rowlab" x="462" y="218">세로 변화 y₂ − y₁</text>
+      <text class="celllab" x="462" y="244" id="q3dy" fill="var(--aux)"></text>
+      <text class="rowlab" x="462" y="292">기울기 m = 세로 ÷ 가로</text>
+      <text class="celllab" x="462" y="318" id="q3m"></text>
+      <text class="rowlab" x="462" y="366">y − y₁ = m(x − x₁) 을 정리하면</text>
+      <text class="celllab" x="462" y="392" id="q3eq"></text>
+    </svg>
+  </div>
+
+  <div class="controls">
+    <label for="sx">x₂</label>
+    <input type="range" id="sx" min="-3" max="7" step="0.5" value="5">
+    <span class="readout" id="rx"></span>
+  </div>
+  <div class="controls">
+    <label for="sy">y₂</label>
+    <input type="range" id="sy" min="-3" max="7" step="0.5" value="6">
+    <span class="readout" id="ry"></span>
+  </div>
+  <div class="controls">
+    <span class="segmented" id="spot" role="group" aria-label="P₂의 위치 바로 가기"></span>
+  </div>
+
+  <div class="verdict" id="vd">
+    <span class="tag" id="vdTag"></span>
+    <span class="why" id="vdWhy"></span>
+  </div>
+  <p class="caption">가로·세로 눈금 모두 한 칸 = 1 로 같은 배율입니다. 판정 상자가 <strong>분홍으로 바뀌는 자리가 경계</strong>입니다 — 분모가 0이 되거나, 두 점이 겹쳐 직선이 하나로 정해지지 않는 자리입니다.</p>
+</section>
+
+<section class="wrap">
+  <h2>네 가지 경우 — 언제 이 식을 쓸 수 없나</h2>
+  <p>두 점을 어떻게 잡느냐에 따라 네 가지 경우가 생깁니다. 그중 <strong>둘은 조심해야 하고, 하나는 아예 이 방법이 통하지 않습니다.</strong></p>
+
+  <!-- 그림4: 네 개의 작은 좌표판. 각 판은 중심 (cx,150), 한 칸 25px, 창 x·y ∈ [−2.4, 2.4]
+       중심 cx = 110, 300, 490, 680 · 판의 테두리는 중심 ±60
+       ① m = 2  : y = 2x  → (−1.2,−2.4)~(1.2,2.4) → (cx−30,210)~(cx+30,90)
+       ② m = 0  : y = 1   → (cx−60,125)~(cx+60,125)
+       ③ m = −1 : y = −x  → (−2.4,2.4)~(2.4,−2.4) → (cx−60,90)~(cx+60,210)
+       ④ 수직선 : x = 1   → (cx+25,90)~(cx+25,210) -->
+  <div class="stage stage--scroll">
+    <svg viewBox="0 0 780 300" role="img" aria-labelledby="t4 d4">
+      <title id="t4">기울기의 네 가지 경우 — 양수, 0, 음수, 그리고 수직선</title>
+      <desc id="d4">작은 좌표판 네 개. 첫째는 오른쪽 위로 오르는 직선(기울기 양수), 둘째는 수평선(기울기 0), 셋째는 오른쪽 아래로 내려가는 직선(기울기 음수), 넷째는 세로 직선이다. 세로 직선만 y = ax + b 꼴로 쓸 수 없다.</desc>
+
+      <g stroke="var(--hair)" stroke-width="1">
+        <line x1="50" y1="90" x2="170" y2="90"/><line x1="50" y1="210" x2="170" y2="210"/>
+        <line x1="50" y1="90" x2="50" y2="210"/><line x1="170" y1="90" x2="170" y2="210"/>
+        <line x1="240" y1="90" x2="360" y2="90"/><line x1="240" y1="210" x2="360" y2="210"/>
+        <line x1="240" y1="90" x2="240" y2="210"/><line x1="360" y1="90" x2="360" y2="210"/>
+        <line x1="430" y1="90" x2="550" y2="90"/><line x1="430" y1="210" x2="550" y2="210"/>
+        <line x1="430" y1="90" x2="430" y2="210"/><line x1="550" y1="90" x2="550" y2="210"/>
+        <line x1="620" y1="90" x2="740" y2="90"/><line x1="620" y1="210" x2="740" y2="210"/>
+        <line x1="620" y1="90" x2="620" y2="210"/><line x1="740" y1="90" x2="740" y2="210"/>
+      </g>
+      <g stroke="var(--ink)" stroke-width="1.2">
+        <line x1="50" y1="150" x2="170" y2="150"/><line x1="110" y1="90" x2="110" y2="210"/>
+        <line x1="240" y1="150" x2="360" y2="150"/><line x1="300" y1="90" x2="300" y2="210"/>
+        <line x1="430" y1="150" x2="550" y2="150"/><line x1="490" y1="90" x2="490" y2="210"/>
+        <line x1="620" y1="150" x2="740" y2="150"/><line x1="680" y1="90" x2="680" y2="210"/>
+      </g>
+
+      <line x1="80" y1="210" x2="140" y2="90" stroke="var(--given)" stroke-width="2.5"/>
+      <line x1="240" y1="125" x2="360" y2="125" stroke="var(--given)" stroke-width="2.5"/>
+      <line x1="430" y1="90" x2="550" y2="210" stroke="var(--given)" stroke-width="2.5"/>
+      <line x1="705" y1="90" x2="705" y2="210" stroke="var(--break)" stroke-width="2.5"/>
+
+      <text class="celllab" x="50" y="242" fill="var(--result)">① m &gt; 0</text>
+      <text class="celllab" x="50" y="262">오른쪽 위로 오른다</text>
+      <text class="celllab" x="50" y="282">y = 2x · 일차함수</text>
+      <text class="celllab" x="240" y="242" fill="var(--result)">② m = 0</text>
+      <text class="celllab" x="240" y="262">수평선 — 안 오른다</text>
+      <text class="celllab" x="240" y="282">y = 1 · 상수함수</text>
+      <text class="celllab" x="430" y="242" fill="var(--result)">③ m &lt; 0</text>
+      <text class="celllab" x="430" y="262">오른쪽 아래로 내려간다</text>
+      <text class="celllab" x="430" y="282">y = −x · 일차함수</text>
+      <text class="celllab" x="620" y="242" fill="var(--break)">④ 기울기가 없다</text>
+      <text class="celllab" x="620" y="262">세로선 — 분모가 0</text>
+      <text class="celllab" x="620" y="282">x = 1 · 함수가 아니다</text>
+    </svg>
+  </div>
+  <p class="caption">네 판 모두 가로·세로 한 칸 = 1 로 같은 배율입니다. 분홍인 ④만 이 자료의 공식으로 쓸 수 없습니다.</p>
+
+  <div class="table-scroll">
+  <table>
+    <caption>두 점 (x₁, y₁), (x₂, y₂)가 서로 다른 점일 때 · 일차함수의 정의는 y = ax + b (a ≠ 0)</caption>
+    <thead><tr><th>두 점의 관계</th><th class="num">기울기</th><th class="num">직선의 식</th><th>함수인가</th></tr></thead>
+    <tbody>
+      <tr><td class="num">x₁ ≠ x₂, y₁ ≠ y₂</td><td class="num">m ≠ 0</td><td class="num">y = mx + b</td><td>일차함수다</td></tr>
+      <tr><td class="num">x₁ ≠ x₂, y₁ = y₂</td><td class="num">m = 0</td><td class="num">y = y₁ (수평선)</td><td>함수이지만 <strong>일차함수는 아니다</strong> — x가 사라져 상수함수</td></tr>
+      <tr><td class="num">x₁ = x₂, y₁ ≠ y₂</td><td class="num">없다 (분모 0)</td><td class="num">x = x₁ (세로선)</td><td><strong>함수가 아니다</strong> — x 하나에 y가 무수히 많다</td></tr>
+      <tr><td class="num">두 점이 같은 점</td><td class="num">정할 수 없다</td><td class="num">정해지지 않는다</td><td>그 점을 지나는 직선이 무수히 많다</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note">
+    <strong>수직선이 함수가 아닌 이유.</strong> 함수는 <strong>x 하나에 y가 딱 하나</strong> 정해지는 규칙입니다.
+    <span class="math">x = 1</span> 인 세로선 위에는 (1, 0), (1, 5), (1, −3) … 이 모두 있어서 "x = 1일 때 y는?"에 답할 수 없습니다.
+    그래서 <span class="math">y = …</span> 꼴로 쓸 수 없는 것이고, 이것은 공식의 한계가 아니라 <strong>그 직선의 성질</strong>입니다.
+    <span class="src">기울기가 "0"인 것과 "없는" 것은 전혀 다릅니다 — 0은 값이고, 없는 것은 값이 아닙니다</span>
+  </div>
+
+  <div class="note trap">
+    <strong>여기서 틀린다 — 기울기 0과 기울기 없음을 섞는다.</strong>
+    수평선의 기울기는 <strong>0</strong>이고(세로 변화가 0이니 0 ÷ 가로 = 0),
+    세로선은 기울기가 <strong>아예 없습니다</strong>(가로 변화가 0이라 나눌 수 없음).
+    "0으로 나눌 수 없다"와 "0을 나눈다"를 구별하세요 — <span class="math">0 ÷ 4 = 0</span> 이지만 <span class="math">4 ÷ 0</span> 은 값이 없습니다.
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>써먹기 — 세 점이 한 직선 위에 있는가</h2>
+  <p>점이 셋 주어졌을 때 "일직선 위에 있는가"를 묻는 문제가 자주 나옵니다. 방법은 간단합니다. <strong>두 점으로 식을 만들고, 남은 한 점을 대입해 봅니다.</strong></p>
+
+  <!-- (1,3), (3,7) → y = 2x + 1
+       (5,11): 2·5 + 1 = 11 ✓ 한 직선 위
+       (4,10): 2·4 + 1 = 9 ≠ 10 ✗ 아니다
+       기울기로 비교해도 같다: (11−7)/(5−3) = 2 ✓ · (10−7)/(4−3) = 3 ✗ -->
+  <div class="eq">
+    <ol>
+      <li>(1, 3)과 (3, 7)로 만든 식: <span class="keep">y = 2x + 1</span> <span class="why">예시 1에서 이미 구했다</span></li>
+      <li>(5, 11) 대입 → 2 × 5 + 1 = 11 <span class="out">✓ 한 직선 위에 있다</span> <span class="why">식이 참이 된다</span></li>
+      <li>(4, 10) 대입 → 2 × 4 + 1 = 9 ≠ 10 <span class="why">✗ 이 점은 직선 밖이다</span></li>
+    </ol>
+  </div>
+
+  <p>기울기로 따져도 같습니다. (3, 7)에서 (5, 11)로 가는 계단은 <span class="math">4 ÷ 2 = 2</span> 로 원래 기울기와 같지만, (3, 7)에서 (4, 10)으로 가는 계단은 <span class="math">3 ÷ 1 = 3</span> 이라 다릅니다. <strong>기울기가 다르면 같은 직선일 수 없습니다.</strong></p>
+
+  <h3>역도 성립할까</h3>
+  <p>지난 챕터(B01 중선정리)에서는 역이 <strong>거짓</strong>이었습니다. 이번에는 어떨까요.</p>
+  <ul>
+    <li><strong>직선 위의 점이면 식을 만족하는가</strong> → 참입니다. 계단 비율이 같아야 하니까요.</li>
+    <li><strong>식을 만족하면 직선 위의 점인가</strong> → 이것도 참입니다. <span class="math">y − y₁ = m(x − x₁)</span> 을 만족하는 점들을 모두 모으면 그것이 바로 그 직선이기 때문입니다.</li>
+  </ul>
+  <p>즉 여기서는 <strong>양쪽 다 성립합니다.</strong> 그래서 "직선 위에 있다"와 "식을 만족한다"를 서로 바꿔 써도 됩니다 — 위의 판정법이 통하는 이유가 이것입니다. <strong>다만 매번 따져 봐야 합니다.</strong> 지난 챕터처럼 역이 무너지는 경우도 있으니까요.</p>
+</section>
+
+<section class="wrap">
+  <h2>남는 것</h2>
+  <ul>
+    <li><strong>기울기는 "세로 ÷ 가로"다.</strong> <span class="math">m = (y₂ − y₁) / (x₂ − x₁)</span> — 위아래를 같은 순서로만 맞추면 어느 점을 먼저 써도 된다.</li>
+    <li><strong>식은 외우는 게 아니라 만드는 것이다.</strong> 직선 위의 떠도는 점 (x, y)도 같은 계단 비율을 지켜야 한다고 적으면 <span class="math">y − y₁ = m(x − x₁)</span> 이 나온다.</li>
+    <li><strong>조건은 <span class="math">x₁ ≠ x₂</span> 하나다.</strong> 두 점의 x가 같으면 분모가 0이라 기울기가 없고, 그 직선은 <span class="math">x = x₁</span> 이라고 써야 한다.</li>
+  </ul>
+
+  <div class="note">
+    <strong>검산을 습관으로.</strong> 식을 만들었으면 <strong>주어진 두 점을 반드시 다시 대입해 보세요.</strong>
+    부호 하나만 틀려도 그 자리에서 드러납니다. 5초면 됩니다.
+  </div>
+
+  <p>이 계단 하나가 고1에서 계속 쓰입니다. <strong>「공통수학2」 도형의 방정식</strong>에서 두 직선이 평행한지(기울기가 같은지) 수직인지(기울기의 곱이 −1인지)를 따지고, 원의 접선을 구할 때도 결국 이 식으로 돌아옵니다.</p>
+</section>
+
+<nav class="pager wrap">
+  <a href="../b01-median-theorem/index.html">← 기본 B01 중선정리</a>
+  <a href="../01-quadratic-vertex/index.html">01 이차함수의 최대·최소 →</a>
+</nav>
+
+<script>
+(function(){
+'use strict';
+var NS = 'http://www.w3.org/2000/svg';
+
+function num(v){
+  if(!isFinite(v)) return '—';
+  var r = Math.round(v*1000)/1000;
+  if(r === 0) r = 0;                        // −0 을 0 으로
+  return String(r).replace('-', '−');       // 화면에는 유니코드 빼기표
+}
+function line(x1,y1,x2,y2){
+  var e = document.createElementNS(NS,'line');
+  e.setAttribute('x1',x1); e.setAttribute('y1',y1);
+  e.setAttribute('x2',x2); e.setAttribute('y2',y2);
+  return e;
+}
+
+/* ── 분수 계산 (기울기를 소수로 반올림하지 않고 정확히 보이기 위해) ── */
+function gcd(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){ var t=a%b; a=b; b=t; } return a; }
+function fr(p,q){                            // p/q 를 약분하고 부호를 분자로 몰아 준다
+  if(q < 0){ p = -p; q = -q; }
+  var g = gcd(p,q) || 1;
+  return {p:p/g, q:q/g};
+}
+function frStr(f){
+  return (f.q === 1 ? String(f.p) : f.p + '/' + f.q).replace('-', '−');
+}
+function frVal(f){ return f.p / f.q; }
+
+/* ══════════ 그림3 · 두 점을 움직여 보기 ══════════
+   X(x) = 150 + 30x,  Y(y) = 270 − 30y   (30px/단위, 가로세로 동일)
+   창 x, y ∈ [−4, 8] · 고정점 P₁(1, 2)                                */
+function X3(x){ return 150 + 30*x; }
+function Y3(y){ return 270 - 30*y; }
+var X1 = 1, Y1 = 2, LO = -4, HI = 8;
+
+(function grid3(){
+  var g = document.getElementById('grid3'), i;
+  for(i=LO;i<=HI;i++) if(i!==0){
+    g.appendChild(line(X3(i),Y3(HI),X3(i),Y3(LO)));
+    g.appendChild(line(X3(LO),Y3(i),X3(HI),Y3(i)));
+  }
+})();
+
+function clipLine(m, b){                     // 직선을 창 안으로 잘라 두 끝점을 돌려준다
+  var pts = [];
+  function add(x,y){
+    if(x < LO-1e-9 || x > HI+1e-9 || y < LO-1e-9 || y > HI+1e-9) return;
+    for(var i=0;i<pts.length;i++)
+      if(Math.abs(pts[i][0]-x)<1e-9 && Math.abs(pts[i][1]-y)<1e-9) return;
+    pts.push([x,y]);
+  }
+  add(LO, m*LO + b); add(HI, m*HI + b);
+  if(m !== 0){ add((LO-b)/m, LO); add((HI-b)/m, HI); }
+  return pts;
+}
+
+var sx = document.getElementById('sx'), sy = document.getElementById('sy');
+
+function update3(){
+  var x2 = parseFloat(sx.value), y2 = parseFloat(sy.value);
+  var dx = x2 - X1, dy = y2 - Y1;            // 가로 변화 · 세로 변화
+  var same = (dx === 0 && dy === 0);         // 두 점이 겹쳤다
+  var vertical = (dx === 0 && !same);        // 세로선 — 분모가 0
+
+  document.getElementById('rx').textContent = 'x₂ = ' + num(x2);
+  document.getElementById('ry').textContent = 'y₂ = ' + num(y2);
+
+  document.getElementById('p2dot').setAttribute('cx', X3(x2));
+  document.getElementById('p2dot').setAttribute('cy', Y3(y2));
+  document.getElementById('p2dot').setAttribute('fill', same ? 'var(--break)' : 'var(--result)');
+  var pl = document.getElementById('p2lab');
+  pl.setAttribute('x', X3(x2) + 12);
+  pl.setAttribute('y', Y3(y2) - 10);
+  pl.textContent = same ? '' : 'P₂(' + num(x2) + ', ' + num(y2) + ')';
+
+  // 계단 (보조선): P₁ → 가로로 → P₂
+  var step = document.getElementById('step3');
+  if(same) step.setAttribute('visibility','hidden');
+  else {
+    step.setAttribute('visibility','visible');
+    step.setAttribute('d', 'M ' + X3(X1) + ',' + Y3(Y1) +
+                           ' L ' + X3(x2) + ',' + Y3(Y1) +
+                           ' L ' + X3(x2) + ',' + Y3(y2));
+  }
+
+  document.getElementById('q3pts').textContent =
+    'P₁(1, 2) · P₂(' + num(x2) + ', ' + num(y2) + ')';
+  document.getElementById('q3dx').textContent = num(x2) + ' − 1 = ' + num(dx);
+  document.getElementById('q3dy').textContent = num(y2) + ' − 2 = ' + num(dy);
+
+  var ln = document.getElementById('line3'),
+      vd = document.getElementById('vd'),
+      tag = document.getElementById('vdTag'),
+      why = document.getElementById('vdWhy');
+
+  if(same){
+    ln.setAttribute('visibility','hidden');
+    document.getElementById('q3m').textContent  = '정할 수 없다';
+    document.getElementById('q3m').setAttribute('fill','var(--break)');
+    document.getElementById('q3eq').textContent = '직선이 하나로 정해지지 않는다';
+    document.getElementById('q3eq').setAttribute('fill','var(--break)');
+    vd.className = 'verdict bad';
+    tag.textContent = '두 점이 같다';
+    why.textContent = 'P₂가 P₁ 위에 겹쳤습니다. 점 하나만으로는 직선이 정해지지 않습니다 — '
+                    + '그 점을 지나는 직선은 무수히 많습니다. 두 점은 서로 달라야 합니다.';
+    return;
+  }
+
+  if(vertical){
+    ln.setAttribute('visibility','visible');
+    ln.setAttribute('x1', X3(X1)); ln.setAttribute('y1', Y3(LO));
+    ln.setAttribute('x2', X3(X1)); ln.setAttribute('y2', Y3(HI));
+    ln.setAttribute('stroke','var(--break)');
+    document.getElementById('q3m').textContent  = num(dy) + ' ÷ 0 — 없다';
+    document.getElementById('q3m').setAttribute('fill','var(--break)');
+    document.getElementById('q3eq').textContent = 'x = 1  (y = ax + b 꼴로 못 쓴다)';
+    document.getElementById('q3eq').setAttribute('fill','var(--break)');
+    vd.className = 'verdict bad';
+    tag.textContent = '분모 0';
+    why.textContent = '두 점의 x가 같아 가로 변화가 0입니다. 0으로 나눌 수 없으니 기울기가 없습니다. '
+                    + '이 직선은 x = 1 이라고 써야 하고, x 하나에 y가 무수히 많아 함수도 아닙니다.';
+    return;
+  }
+
+  var m = fr(dy*2, dx*2);                    // 눈금이 0.5 이므로 2배 해서 정수로 만든 뒤 약분
+  var b = fr(Y1*m.q - m.p*X1, m.q);          // b = y₁ − m·x₁
+  var mv = frVal(m), bv = frVal(b);
+
+  var pts = clipLine(mv, bv);
+  ln.setAttribute('visibility','visible');
+  ln.setAttribute('stroke','var(--given)');
+  ln.setAttribute('x1', X3(pts[0][0])); ln.setAttribute('y1', Y3(pts[0][1]));
+  ln.setAttribute('x2', X3(pts[1][0])); ln.setAttribute('y2', Y3(pts[1][1]));
+
+  document.getElementById('q3m').textContent =
+    num(dy) + ' ÷ ' + num(dx) + ' = ' + frStr(m);
+  document.getElementById('q3m').setAttribute('fill','var(--result)');
+
+  // 분수 기울기는 (3/4)x 처럼 괄호를 씌운다 — 3/4x 는 3/(4x) 로 읽힐 수 있다
+  var head = m.p === 0 ? ''
+           : frStr(m) === '1'  ? 'x'
+           : frStr(m) === '−1' ? '−x'
+           : m.q === 1 ? frStr(m) + 'x' : '(' + frStr(m) + ')x';
+  var tail = b.p === 0 ? (head === '' ? '0' : '')
+           : (head === '' ? frStr(b) : (b.p > 0 ? ' + ' + frStr(b) : ' − ' + frStr(fr(-b.p, b.q))));
+  var eq = 'y = ' + head + tail;
+  document.getElementById('q3eq').textContent = eq;
+  document.getElementById('q3eq').setAttribute('fill','var(--result)');
+
+  vd.className = 'verdict ok';
+  if(m.p === 0){
+    tag.textContent = '기울기 0';
+    why.textContent = '가로로만 움직였습니다. 세로 변화가 0이라 기울기는 0 — 수평선 ' + eq + ' 입니다. '
+                    + '직선이긴 하지만 x가 사라졌으므로 일차함수가 아니라 상수함수입니다.';
+  } else {
+    tag.textContent = '기울기 ' + frStr(m);
+    why.textContent = 'y − 2 = ' + frStr(m) + '(x − 1) 을 정리하면 ' + eq + ' 입니다. '
+                    + (mv > 0 ? '오른쪽으로 갈수록 올라갑니다.' : '오른쪽으로 갈수록 내려갑니다.');
+  }
+
+  var btns = document.getElementById('spot').children, i;
+  for(i=0;i<btns.length;i++){
+    btns[i].setAttribute('aria-pressed',
+      (parseFloat(btns[i].getAttribute('data-x')) === x2 &&
+       parseFloat(btns[i].getAttribute('data-y')) === y2) ? 'true' : 'false');
+  }
+}
+
+(function buildPicker(){
+  var host = document.getElementById('spot');
+  var SPOTS = [
+    {lab:'처음으로 (5, 6)', x:5, y:6},
+    {lab:'수평선 y₂ = 2',  x:5, y:2},
+    {lab:'세로선 x₂ = 1',  x:1, y:6},
+    {lab:'겹치기 (1, 2)',  x:1, y:2}
+  ];
+  SPOTS.forEach(function(s){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = s.lab;
+    b.setAttribute('data-x', s.x); b.setAttribute('data-y', s.y);
+    b.setAttribute('aria-pressed','false');
+    b.addEventListener('click', function(){ sx.value = s.x; sy.value = s.y; update3(); });
+    host.appendChild(b);
+  });
+})();
+
+sx.addEventListener('input', update3);
+sy.addEventListener('input', update3);
+update3();
+})();
+</script>
+
+</body>
+</html>

@@ -13,6 +13,7 @@
 """
 
 import math
+from fractions import Fraction as F
 
 TOL = 1e-9
 
@@ -531,6 +532,313 @@ def check_b01_pixels():
 
 
 
+# ══════════ b02 두 점을 지나는 직선 ════════════════════════════════
+# 근거: x₁ ≠ x₂ 이면  m = (y₂−y₁)/(x₂−x₁),  y − y₁ = m(x − x₁)
+# 검산 방식: 공식을 다시 쓰지 않는다. 분수를 정확히(Fraction) 계산하고,
+#            "두 점을 지나는가"는 좌표를 직접 대입해서 확인한다.
+
+
+def slope(p, q):
+    """두 점의 기울기 — x가 같으면 ZeroDivisionError 가 나는 게 정상이다"""
+    return F(q[1] - p[1], q[0] - p[0])
+
+
+def line_from(p, q):
+    """두 점에서 (m, b) — y = mx + b"""
+    m = slope(p, q)
+    return m, F(p[1]) - m * p[0]
+
+
+def on_line(m, b, pt):
+    """대입해서 성립하는가 (식을 다시 유도하지 않고 값만 넣어 본다)"""
+    return F(pt[1]) == m * pt[0] + b
+
+
+# 자료에 게시된 값 ─────────────────────────────────────────────
+#   (두 점, 가로, 세로, 기울기, y절편)
+PUB_B02_EXAMPLES = [
+    (((1, 3), (3, 7)),   2, 4,  F(2),    F(1)),
+    (((2, 1), (6, 4)),   4, 3,  F(3, 4), F(-1, 2)),
+    (((-1, 5), (3, -3)), 4, -8, F(-2),   F(3)),
+]
+
+# 자료가 "이렇게 하면 틀린다"고 게시한 계산들
+#   (설명, 잘못 구한 기울기, 잘못된 식의 b, 확인할 점, 그 식이 내놓는 값, 실제 y)
+PUB_B02_WRONG = [
+    ("가로÷세로로 뒤집기 (1,3)·(3,7)", F(2, 4),  F(5, 2), (3, 7),  F(4),  7),
+    ("순서 섞기 (7−3)/(1−3)",          F(-2),    F(5),    (3, 7),  F(-1), 7),
+    ("음수 부호 놓치기 x−(−1)→x−1",     F(-2),    F(7),    (-1, 5), F(9),  5),
+]
+
+# 그림2의 계단 세 개 — 어느 것으로 재도 기울기가 2 여야 한다
+PUB_B02_STEPS = [
+    ((-1, -1), (0, 1),  1,  2),
+    ((0, 1),   (2, 5),  2,  4),
+    ((4, 9),   (1, 3), -3, -6),      # 거꾸로 재기
+]
+PUB_B02_STEP_SLOPE = F(2)
+
+# 세 점이 한 직선 위에 있는가 (게시한 판정)
+PUB_B02_COLLINEAR = [
+    (((1, 3), (3, 7), (5, 11)), True,  F(11)),   # 대입값 2·5+1 = 11
+    (((1, 3), (3, 7), (4, 10)), False, F(9)),    # 대입값 2·4+1 = 9 ≠ 10
+]
+
+# 그림3(인터랙션) — P₁(1,2) 고정, 게시한 상태들
+#   (x₂, y₂, 상태, 기울기, y절편)
+PUB_B02_INTERACTIVE = [
+    (5, 6, 'ok',       F(1), F(1)),      # 처음 상태 y = x + 1
+    (5, 2, 'flat',     F(0), F(2)),      # 수평선 y = 2 (상수함수)
+    (1, 6, 'vertical', None, None),      # 분모 0 — x = 1
+    (1, 2, 'same',     None, None),      # 두 점이 겹침
+]
+
+# 그림에 손으로 박아 넣은 픽셀 좌표
+#   그림1·2  X(x) =  90 + 36x,  Y(y) = 350 − 36y
+#   그림3    X(x) = 150 + 30x,  Y(y) = 270 − 30y
+#   그림4    X(x) = (판의 중심) + 25x,  Y(y) = 150 − 25y
+PUB_B02_PIXELS = [
+    ("그림1·2 (−1,−1)",  90, 36, 350, 36, (-1, -1),   (54, 386)),
+    ("그림1·2 (0,1)",    90, 36, 350, 36, (0, 1),     (90, 314)),
+    ("그림1·2 (1,3) A",  90, 36, 350, 36, (1, 3),     (126, 242)),
+    ("그림1·2 (2,5)",    90, 36, 350, 36, (2, 5),     (162, 170)),
+    ("그림1·2 (3,7) B",  90, 36, 350, 36, (3, 7),     (198, 98)),
+    ("그림1·2 (4,9)",    90, 36, 350, 36, (4, 9),     (234, 26)),
+    ("그림1 계단코너(3,3)", 90, 36, 350, 36, (3, 3),   (198, 242)),
+    ("그림2 코너(0,−1)",  90, 36, 350, 36, (0, -1),   (90, 386)),
+    ("그림2 코너(2,1)",   90, 36, 350, 36, (2, 1),    (162, 314)),
+    ("그림2 코너(1,9)",   90, 36, 350, 36, (1, 9),    (126, 26)),
+    ("그림3 P₁(1,2)",   150, 30, 270, 30, (1, 2),     (180, 210)),
+    ("그림3 P₂(5,6)",   150, 30, 270, 30, (5, 6),     (300, 90)),
+    ("그림3 창 (−4,8)", 150, 30, 270, 30, (-4, 8),    (30, 30)),
+    ("그림3 창 (8,−4)", 150, 30, 270, 30, (8, -4),    (390, 390)),
+    ("그림4 ① (−1.2,−2.4)", 110, 25, 150, 25, (-1.2, -2.4), (80, 210)),
+    ("그림4 ① (1.2,2.4)",   110, 25, 150, 25, (1.2, 2.4),   (140, 90)),
+    ("그림4 ② y=1 왼쪽",     300, 25, 150, 25, (-2.4, 1),   (240, 125)),
+    ("그림4 ② y=1 오른쪽",   300, 25, 150, 25, (2.4, 1),    (360, 125)),
+    ("그림4 ③ (−2.4,2.4)",  490, 25, 150, 25, (-2.4, 2.4),  (430, 90)),
+    ("그림4 ③ (2.4,−2.4)",  490, 25, 150, 25, (2.4, -2.4),  (550, 210)),
+    ("그림4 ④ x=1 위",      680, 25, 150, 25, (1, 2.4),     (705, 90)),
+    ("그림4 ④ x=1 아래",    680, 25, 150, 25, (1, -2.4),    (705, 210)),
+]
+
+
+def check_b02_slope_wellposed():
+    """① 같은 직선 위라면 어느 두 점을 골라도 (y₂−y₁)/(x₂−x₁) 이 같은가"""
+    print("\n[b02] 기울기가 두 점 선택과 무관한가 — 직선마다 모든 점쌍을 전수 비교")
+    ms = [F(a, b) for a in range(-4, 5) for b in (1, 2, 3) if F(a, b) not in (None,)]
+    xs = [F(k, 2) for k in range(-8, 9)]      # 반칸 눈금까지 포함
+    bad, lines, pairs = 0, 0, 0
+    for m in set(ms):
+        for bb in (F(-3), F(0), F(1, 2), F(2)):
+            lines += 1
+            pts = [(x, m * x + bb) for x in xs]
+            for i in range(len(pts)):
+                for j in range(i + 1, len(pts)):
+                    pairs += 1
+                    if slope(pts[i], pts[j]) != m:
+                        bad += 1
+    hit = bad == 0
+    print(f"  직선 {lines}개 · 점쌍 {pairs}가지 확인, 어긋난 경우 {bad}건  {ok_mark(hit)}")
+
+    # 자료의 주장: 거꾸로 재도(가로·세로가 둘 다 음수여도) 같다
+    rev = all(slope(a, b) == slope(b, a) for a, b in
+              [((1, 3), (3, 7)), ((-1, 5), (3, -3)), ((2, 1), (6, 4))])
+    print(f"  두 점의 순서를 바꿔도 기울기가 같다  {ok_mark(rev)}")
+
+    # 그림2의 계단 세 개
+    st = True
+    for p, q, dx, dy in PUB_B02_STEPS:
+        got_dx, got_dy, got_m = q[0] - p[0], q[1] - p[1], slope(p, q)
+        h = (got_dx == dx and got_dy == dy and got_m == PUB_B02_STEP_SLOPE)
+        st &= h
+        print(f"  계단 {p}→{q}  가로 {got_dx:>3}/{dx:<3} 세로 {got_dy:>3}/{dy:<3} "
+              f"기울기 {got_m}  {ok_mark(h)}")
+    return hit and rev and st
+
+
+def check_b02_pointslope():
+    """② 점-기울기 식이 정말 두 점을 모두 지나는가 · 기준점을 바꿔도 같은 직선인가"""
+    print("\n[b02] y − y₁ = m(x − x₁) — 격자점 두 개를 전수로 잡아 대입 확인")
+    R = range(-4, 5)
+    bad_pass, bad_base, total = 0, 0, 0
+    for x1 in R:
+        for y1 in R:
+            for x2 in R:
+                if x2 == x1:
+                    continue                  # 분모 0 — 이 식을 쓸 수 없는 경우
+                for y2 in R:
+                    total += 1
+                    p, q = (x1, y1), (x2, y2)
+                    m, b = line_from(p, q)
+                    if not (on_line(m, b, p) and on_line(m, b, q)):
+                        bad_pass += 1
+                    # 기준점을 q로 바꿔도 같은 식인가: y₂ − m·x₂ == y₁ − m·x₁
+                    if F(y2) - m * x2 != b:
+                        bad_base += 1
+    print(f"  점쌍 {total}가지 · 두 점을 모두 지나지 않은 경우 {bad_pass}건  {ok_mark(bad_pass == 0)}")
+    print(f"  기준점을 다른 점으로 바꿔도 같은 식 — 어긋난 경우 {bad_base}건  {ok_mark(bad_base == 0)}")
+
+    # 자료의 주장: x = x₁ 을 넣으면 y = y₁ 이 되어 '분모가 0이던 구멍'이 메워진다
+    holes = 0
+    for x1 in R:
+        for y1 in R:
+            for x2 in R:
+                if x2 == x1:
+                    continue
+                for y2 in R:
+                    m, _ = line_from((x1, y1), (x2, y2))
+                    if F(y1) - y1 != m * (x1 - x1):     # 양변이 모두 0 이어야 한다
+                        holes += 1
+    print(f"  x = x₁ 을 넣으면 양변이 0 이 되어 아는 점을 가리킨다 — 예외 {holes}건  {ok_mark(holes == 0)}")
+    return bad_pass == 0 and bad_base == 0 and holes == 0
+
+
+def check_b02_examples():
+    """③ 자료에 실은 예시 세 개 — 기울기·식·검산값"""
+    ok = True
+    print("\n[b02] 예시 세 개 — 게시한 값과 대조 (분수는 반올림 없이 정확히 계산)")
+    for (p, q), dx, dy, m_pub, b_pub in PUB_B02_EXAMPLES:
+        m, b = line_from(p, q)
+        h = (q[0] - p[0] == dx and q[1] - p[1] == dy and m == m_pub and b == b_pub
+             and on_line(m, b, p) and on_line(m, b, q))
+        ok &= h
+        print(f"  {str(p):>10} · {str(q):<10} 가로 {dx:>2} 세로 {dy:>3} "
+              f"m = {str(m):>4} (게시 {str(m_pub):>4}) · b = {str(b):>4} (게시 {str(b_pub):>4}) "
+              f"· 두 점 대입 통과  {ok_mark(h)}")
+
+    print("  자료가 '이렇게 하면 틀린다'고 적은 계산들 — 정말 그 값이 나오고, 정말 점을 못 지나는가")
+    for lab, m_bad, b_bad, pt, val_pub, y_real in PUB_B02_WRONG:
+        got = m_bad * pt[0] + b_bad
+        h = (got == val_pub and got != y_real)
+        ok &= h
+        print(f"    {lab:<28} x = {pt[0]:>2} 에서 {str(got):>4} (게시 {str(val_pub):>4}) "
+              f"≠ 실제 {y_real}  {ok_mark(h)}")
+    return ok
+
+
+def check_b02_cases():
+    """④ 네 가지 경우 — 수평선·수직선·겹친 점에서 무엇이 무너지는가"""
+    ok = True
+    print("\n[b02] 네 가지 경우")
+
+    # 수평선: 기울기 0 이고, y = ax + b 에서 a = 0 이므로 일차함수가 아니다
+    m, b = line_from((2, 5), (7, 5))
+    h = (m == 0 and b == 5)
+    ok &= h
+    print(f"  수평선 (2,5)·(7,5) → m = {m} · 식 y = {b} · a = 0 이라 일차함수가 아님  {ok_mark(h)}")
+
+    # 수직선: 나눗셈 자체가 불가능해야 한다 (파이썬이 0으로 나누기를 거부하는지 확인)
+    try:
+        slope((1, 0), (1, 5))
+        raised = False
+    except ZeroDivisionError:
+        raised = True
+    ok &= raised
+    print(f"  수직선 (1,0)·(1,5) → 기울기 계산이 0으로 나누기라 불가능  {ok_mark(raised)}")
+
+    # 수직선은 함수가 아니다: x = 1 을 만족하는 (1, y) 가 여러 개 — 기울어진 직선과 대조한다
+    ys_vert = [y for y in range(-3, 4) if (1, y)[0] == 1]        # 직선 x = 1 위의 점
+    m0, b0 = line_from((1, 2), (5, 6))                            # 기울어진 직선 y = x + 1
+    ys_fun = [y for y in range(-3, 4) if on_line(m0, b0, (1, y))]
+    h = len(ys_vert) > 1 and len(ys_fun) == 1
+    ok &= h
+    print(f"  x = 1 에 대응하는 y — 수직선 위에는 {len(ys_vert)}개, 기울어진 직선 위에는 {len(ys_fun)}개"
+          f" → 수직선만 함수가 아님  {ok_mark(h)}")
+
+    # 두 점이 같으면: 그 점을 지나는 직선이 무수히 많다 (기울기를 아무거나 잡아도 지난다)
+    cnt = 0
+    for mm in [F(k, 2) for k in range(-6, 7)]:
+        bb = F(2) - mm * 1
+        if on_line(mm, bb, (1, 2)):
+            cnt += 1
+    h = cnt == 13
+    ok &= h
+    print(f"  점 (1,2) 하나만 주면 기울기를 바꿔가며 {cnt}개(무수히 많음)의 직선이 모두 지난다  {ok_mark(h)}")
+
+    # 0 ÷ 4 와 4 ÷ 0 은 다르다 (자료의 trap)
+    zero_div = F(0, 4) == 0
+    try:
+        F(4, 0)
+        undef = False
+    except ZeroDivisionError:
+        undef = True
+    ok &= zero_div and undef
+    print(f"  0 ÷ 4 = 0 은 값이 있고, 4 ÷ 0 은 값이 없다  {ok_mark(zero_div and undef)}")
+    return ok
+
+
+def check_b02_collinear():
+    """⑤ 세 점이 한 직선 위에 있는가 — 대입 판정과 기울기 판정이 늘 일치하는가"""
+    ok = True
+    print("\n[b02] 세 점의 공선 판정")
+    for (a, b_, c), verdict, val in PUB_B02_COLLINEAR:
+        m, bb = line_from(a, b_)
+        got_val = m * c[0] + bb
+        got = (got_val == c[1])
+        h = (got == verdict and got_val == val)
+        ok &= h
+        print(f"  {a}·{b_} 로 만든 식에 {c} 대입 → {got_val} (게시 {val}) · "
+              f"판정 {'한 직선 위' if got else '아니다':<7} {ok_mark(h)}")
+
+    # 두 판정법(대입 vs 기울기 비교)이 격자 전수에서 일치하는가
+    R = range(-3, 4)
+    off, n = 0, 0
+    for x1 in R:
+        for y1 in R:
+            for x2 in R:
+                if x2 == x1:
+                    continue
+                for y2 in R:
+                    m, bb = line_from((x1, y1), (x2, y2))
+                    for x3 in R:
+                        for y3 in R:
+                            n += 1
+                            by_sub = (F(y3) == m * x3 + bb)
+                            by_slope = (x3 != x2 and slope((x2, y2), (x3, y3)) == m) \
+                                       or ((x3, y3) == (x2, y2))
+                            if by_sub != by_slope:
+                                off += 1
+    ok &= off == 0
+    print(f"  대입 판정 = 기울기 판정, 세 점 조합 {n}가지에서 어긋난 경우 {off}건  {ok_mark(off == 0)}")
+    return ok
+
+
+def check_b02_interactive():
+    """⑥ 그림3이 표시하는 값 — P₁(1,2) 고정, 게시한 네 상태"""
+    ok = True
+    print("\n[b02] 인터랙션 패널 값 (P₁(1, 2) 고정)")
+    P1 = (1, 2)
+    for x2, y2, state, m_pub, b_pub in PUB_B02_INTERACTIVE:
+        dx, dy = x2 - P1[0], y2 - P1[1]
+        if dx == 0:
+            got = 'same' if dy == 0 else 'vertical'
+            h = (got == state)
+            print(f"  P₂({x2}, {y2}) → 가로 변화 {dx} · 상태 '{got}' (게시 '{state}')  {ok_mark(h)}")
+        else:
+            m, b = line_from(P1, (x2, y2))
+            got = 'flat' if m == 0 else 'ok'
+            h = (got == state and m == m_pub and b == b_pub and on_line(m, b, P1)
+                 and on_line(m, b, (x2, y2)))
+            print(f"  P₂({x2}, {y2}) → 가로 {dx} 세로 {dy} · m = {m} (게시 {m_pub}) · "
+                  f"b = {b} (게시 {b_pub}) · 상태 '{got}'  {ok_mark(h)}")
+        ok &= h
+    return ok
+
+
+def check_b02_pixels():
+    """⑦ 네 그림에 박아 넣은 픽셀 좌표가 주석의 매핑식과 맞는가"""
+    ok = True
+    print("\n[b02] SVG 좌표 검산 — 그림1·2 90+36x · 그림3 150+30x · 그림4 (판 중심)+25x")
+    for lab, x0, sx, y0, sy, (x, y), (px, py) in PUB_B02_PIXELS:
+        gx, gy = x0 + sx * x, y0 - sy * y
+        hit = abs(gx - px) < 0.5 and abs(gy - py) < 0.5
+        ok &= hit
+        print(f"  {lab:<22} 계산 ({gx:>6.1f},{gy:>6.1f})  게시 ({px},{py})  {ok_mark(hit)}")
+    return ok
+
+
+
 def main():
     print("고1 수학 직관 — 수치·주장 검산")
     ok = True
@@ -545,6 +853,13 @@ def main():
     ok &= check_b01_converse()
     ok &= check_b01_parallelogram()
     ok &= check_b01_pixels()
+    ok &= check_b02_slope_wellposed()
+    ok &= check_b02_pointslope()
+    ok &= check_b02_examples()
+    ok &= check_b02_cases()
+    ok &= check_b02_collinear()
+    ok &= check_b02_interactive()
+    ok &= check_b02_pixels()
     print("\n전체:", "통과" if ok else "실패 — 자료의 값을 확인할 것")
     return 0 if ok else 1
 
